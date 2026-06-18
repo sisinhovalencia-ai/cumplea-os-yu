@@ -1,0 +1,42 @@
+CÓMO TERMINAR "NUESTRA CONSTELACIÓN"
+═══════════════════════════════════
+
+1) FOTOS
+   Pon hasta 6 fotos en esta misma carpeta, junto a index.html,
+   con estos nombres exactos:
+
+     foto1.jpg   → la tienda
+     foto2.jpg   → la visita a la casa
+     foto3.jpg   → el video manifestando
+     foto4.jpg   → las peleas
+     foto5.jpg   → diciembre, la foto juntos
+     foto6.jpg   → los tulipanes eternos
+
+   Si alguna no la tienes, no pasa nada: esa tarjeta se queda
+   con un espacio en blanco con un ícono, no rompe la página.
+
+   Si tu foto es .png en vez de .jpg, ábrela en main.js y
+   busca el comentario "AQUÍ VA LA IMAGEN" — ahí cambias el
+   nombre del archivo (ej. "img: 'foto1.png'").
+
+2) CANCIÓN
+   Pon el archivo de audio (Bruno Mars - Risk It All) en esta
+   misma carpeta con el nombre exacto:
+
+     audio.mp3
+
+   Eso es todo — el reproductor ya está listo, solo necesita
+   el archivo.
+
+3) ABRIR LA PÁGINA
+   Haz doble clic en index.html para verla en tu computador,
+   o sube toda la carpeta a un hosting gratuito (por ejemplo
+   Netlify, GitHub Pages o Vercel) para enviarle el link a
+   Yurany desde el celular.
+
+4) SI QUIERES CAMBIAR TEXTOS
+   Todos los textos de cada estrella (título y frase) y el
+   mensaje final están en main.js, dentro de la lista
+   MEMORIES y la variable FINAL_MESSAGE, al inicio del
+   archivo — son fáciles de editar, solo cambia lo que está
+   entre comillas.
