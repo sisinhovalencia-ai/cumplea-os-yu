@@ -50,8 +50,22 @@
 
   <!-- CIELO / CONSTELACIÓN -->
   <div id="constellation" class="hidden">
-    <p id="hint">toca cada estrella, en orden</p>
+    <div id="hint">
+      <span id="hint-text">toca la primera estrella</span>
+      <span id="hint-dot">·</span>
+      <span id="hint-progress">I / VI</span>
+    </div>
     <div id="constellation-frame">
+      <svg id="chart-rings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="47" class="ring"/>
+        <circle cx="50" cy="50" r="33" class="ring ring-inner"/>
+        <g class="ticks">
+          <line x1="50" y1="1.5" x2="50" y2="6.5"/>
+          <line x1="50" y1="93.5" x2="50" y2="98.5"/>
+          <line x1="1.5" y1="50" x2="6.5" y2="50"/>
+          <line x1="93.5" y1="50" x2="98.5" y2="50"/>
+        </g>
+      </svg>
       <svg id="lines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div id="stars-layer"><!-- las estrellas se generan en main.js a partir de MEMORIES --></div>
     </div>
@@ -63,6 +77,9 @@
 <div id="card-sheet" class="hidden">
   <div id="card-scrim"></div>
   <div id="card">
+    <div class="card-ornament">
+      <svg viewBox="0 0 90 30" fill="none"><line x1="4" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.5"/><line x1="60" y1="15" x2="86" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.5"/><path d="M45 9 L47 14 L52 15 L47 16 L45 21 L43 16 L38 15 L43 14 Z" fill="currentColor" opacity="0.9"/></svg>
+    </div>
     <div id="card-roman">I</div>
     <div id="card-photo-wrap">
       <img id="card-photo" alt=""/>
