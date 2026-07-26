@@ -73,23 +73,21 @@
 
 </div><!-- /stage -->
 
-<!-- TARJETA DE RECUERDO -->
-<div id="card-sheet" class="hidden">
-  <div id="card-scrim"></div>
-  <div id="card">
-    <div class="card-ornament">
-      <svg viewBox="0 0 90 30" fill="none"><line x1="4" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.5"/><line x1="60" y1="15" x2="86" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.5"/><path d="M45 9 L47 14 L52 15 L47 16 L45 21 L43 16 L38 15 L43 14 Z" fill="currentColor" opacity="0.9"/></svg>
+<!-- ESCENA DE RECUERDO — pantalla completa, misma sensación que el final -->
+<div id="memory-scene" class="hidden">
+  <img id="memory-photo" alt=""/>
+  <div id="memory-photo-fallback">
+    <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="0.8"/><circle cx="15" cy="18" r="3" stroke="currentColor" stroke-width="0.8"/><path d="M4 27l9-8 6 6 4-5 9 8" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
+  </div>
+  <div id="memory-scrim"></div>
+  <div id="memory-inner">
+    <div class="ornament small">
+      <svg viewBox="0 0 90 30" fill="none"><line x1="4" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><line x1="60" y1="15" x2="86" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><path d="M45 9 L47 14 L52 15 L47 16 L45 21 L43 16 L38 15 L43 14 Z" fill="currentColor" opacity="0.9"/></svg>
     </div>
-    <div id="card-roman">I</div>
-    <div id="card-photo-wrap">
-      <img id="card-photo" alt=""/>
-      <div id="card-photo-fallback">
-        <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="0.8"/><circle cx="15" cy="18" r="3" stroke="currentColor" stroke-width="0.8"/><path d="M4 27l9-8 6 6 4-5 9 8" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
-      </div>
-    </div>
-    <h2 id="card-title"></h2>
-    <p id="card-caption"></p>
-    <button id="card-next">Continuar ✦</button>
+    <p id="memory-roman" class="memory-eyebrow"></p>
+    <h2 id="memory-title"></h2>
+    <p id="memory-caption"></p>
+    <button id="memory-next">Continuar ✦</button>
   </div>
 </div>
 
