@@ -112,6 +112,14 @@ const FINAL_MESSAGE = 'Feliz cumpleaños, mi amor. Gracias por ser siempre tan l
 const START_DATE = '';
 
 /* ────────────────────────────────────────────────────────
+   AUTO-AVANCE DE LA ESCENA DE RECUERDO
+   Cada recuerdo (foto + texto) pasa solo después de estos
+   segundos, sin que sea necesario tocar "Continuar". Si
+   quieres que sea manual otra vez, deja el valor en 0.
+──────────────────────────────────────────────────────── */
+const MEMORY_AUTO_ADVANCE_SECONDS = 8;
+
+/* ────────────────────────────────────────────────────────
    ESTADO
 ──────────────────────────────────────────────────────── */
 const S = {
@@ -244,15 +252,11 @@ function drawGhostOutline() {
 function buildStars() {
   MEMORIES.forEach((m, i) => {
     const el = document.createElement('div');
-    el.className = 'star-pt' + (i === 0 ? ' next-up' : ' dim');
+    el.className = 'star-pt dim';
     el.style.left = m.x + '%';
     el.style.top  = m.y + '%';
     el.dataset.idx = i;
-
-    // accesibilidad: se puede activar también con teclado (Enter / Espacio)
-    el.setAttribute('role', 'button');
-    el.setAttribute('tabindex', i === 0 ? '0' : '-1');
-    el.setAttribute('aria-label', `Estrella ${m.roman}: ${m.title}`);
+    el.setAttribute('aria-hidden', 'true'); // ya no es interactiva: se enciende sola
 
     const halo = document.createElement('div');
     halo.className = 'halo';
@@ -268,39 +272,41 @@ function buildStars() {
     el.appendChild(halo);
     el.appendChild(glyph);
     el.appendChild(roman);
-    el.addEventListener('click', () => onStarTap(i, el));
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        onStarTap(i, el);
-      }
-    });
     starsLayer.appendChild(el);
   });
 }
 
-function onStarTap(i, el) {
-  if (!el.classList.contains('next-up')) return; // solo se puede tocar la que sigue
+/* ────────────────────────────────────────────────────────
+   ENCENDIDO AUTOMÁTICO DE ESTRELLAS
+   Cada estrella se enciende sola, una tras otra: primero un
+   breve pulso de anticipación (STAR_ANTICIPATION_MS), luego
+   se enciende y se abre su recuerdo. Cuando ese recuerdo se
+   cierra (solo o por el temporizador), se enciende la
+   siguiente automáticamente. No hace falta tocar nada.
+──────────────────────────────────────────────────────── */
+const STAR_ANTICIPATION_MS = 550;  // pulso antes de encenderse
+const STAR_GAP_MS = 500;           // pausa entre un recuerdo y el siguiente
 
-  el.classList.remove('next-up', 'dim');
-  el.classList.add('lit');
-  el.setAttribute('tabindex', '-1');
+function lightStar(i) {
+  const el = starsLayer.querySelector(`[data-idx="${i}"]`);
+  if (!el) return;
 
-  if (i > 0) {
-    drawConstLine(MEMORIES[i - 1], MEMORIES[i]);
-  }
+  el.classList.remove('dim');
+  el.classList.add('next-up'); // breve destello de anticipación
 
-  S.litCount = i + 1;
-  setMood(S.litCount / MEMORIES.length);
-  updateHint(S.litCount);
-  openMemory(MEMORIES[i]);
+  setTimeout(() => {
+    el.classList.remove('next-up');
+    el.classList.add('lit');
 
-  const nextEl = starsLayer.querySelector(`[data-idx="${i + 1}"]`);
-  if (nextEl) {
-    nextEl.classList.remove('dim');
-    nextEl.classList.add('next-up');
-    nextEl.setAttribute('tabindex', '0');
-  }
+    if (i > 0) {
+      drawConstLine(MEMORIES[i - 1], MEMORIES[i]);
+    }
+
+    S.litCount = i + 1;
+    setMood(S.litCount / MEMORIES.length);
+    updateHint(S.litCount);
+    openMemory(MEMORIES[i]);
+  }, STAR_ANTICIPATION_MS);
 }
 
 /* ────────────────────────────────────────────────────────
@@ -312,8 +318,8 @@ function updateHint(litCount) {
     return;
   }
   hintText.textContent = litCount === 0
-    ? 'toca la primera estrella'
-    : 'sigue con la siguiente';
+    ? 'encendiendo el cielo…'
+    : 'un recuerdo tras otro…';
   hintProgress.textContent = `${MEMORIES[litCount].roman} / ${MEMORIES[MEMORIES.length - 1].roman}`;
 }
 
@@ -345,6 +351,7 @@ function closeHeartLoop() {
    ESCENA DE RECUERDO — foto a pantalla completa, tipo cine
 ──────────────────────────────────────────────────────── */
 let memoryPendingIdx = -1;
+let memoryAutoTimer = null;
 
 function openMemory(m) {
   memoryPendingIdx = MEMORIES.indexOf(m);
@@ -371,9 +378,15 @@ function openMemory(m) {
 
   memoryScene.classList.remove('hidden');
   requestAnimationFrame(() => memoryScene.classList.add('open'));
+
+  clearTimeout(memoryAutoTimer);
+  if (MEMORY_AUTO_ADVANCE_SECONDS > 0) {
+    memoryAutoTimer = setTimeout(closeMemory, MEMORY_AUTO_ADVANCE_SECONDS * 1000);
+  }
 }
 
 function closeMemory() {
+  clearTimeout(memoryAutoTimer);
   memoryScene.classList.remove('open');
   setTimeout(() => {
     memoryScene.classList.add('hidden');
@@ -383,10 +396,13 @@ function closeMemory() {
 
 function afterMemoryClosed() {
   const wasLast = memoryPendingIdx === MEMORIES.length - 1;
+  const justClosedIdx = memoryPendingIdx;
   memoryPendingIdx = -1;
   if (wasLast) {
     closeHeartLoop();
     setTimeout(showFinal, 1500);
+  } else {
+    setTimeout(() => lightStar(justClosedIdx + 1), STAR_GAP_MS);
   }
 }
 
@@ -427,9 +443,11 @@ function begin() {
   btnMute.classList.remove('hidden');
   constellation.classList.remove('hidden');
   startAudio();
+  setTimeout(() => lightStar(0), 900); // deja ver el cielo un instante antes de la primera estrella
 }
 
 function restart() {
+  clearTimeout(memoryAutoTimer);
   S.litCount = 0;
   S.started = false;
   setMood(0);
