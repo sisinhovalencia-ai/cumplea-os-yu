@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════
    NUESTRA CONSTELACIÓN — main.js
-   6 estrellas · un corazón que se enciende en orden
+   11 estrellas · un corazón que se enciende en orden
 ════════════════════════════════════════════════════════ */
 'use strict';
 
@@ -11,53 +11,105 @@
    "img" por el nombre de tu archivo (debe estar junto a
    este index.html). Si no pones ninguna, se muestra un
    espacio en blanco con un ícono — no rompe nada.
+
+   Las estrellas VII a XI ya tienen un texto propio, escrito
+   siguiendo el mismo hilo narrativo que las primeras seis
+   (de cómo empezó, a lo que construyeron, a este cumpleaños
+   XVIII). Revísalos y ajusta cualquier detalle o fecha que
+   quieras hacer más específico — son un punto de partida
+   que puedes editar como texto plano, sin tocar nada más.
 ──────────────────────────────────────────────────────── */
 const MEMORIES = [
   {
     roman: 'I',
-    x: 32, y: 33,
+    x: 22, y: 40,
     title: 'Donde todo empezó',
     caption: 'Me preguntaste por tu prima sin saber que, sin quererlo, te estaba encontrando a ti. 😌❤️',
     img: 'foto1.jpg', // AQUÍ VA LA IMAGEN 1 — la tienda
   },
   {
     roman: 'II',
-    x: 50, y: 28,
+    x: 28, y: 24,
     title: 'Llegaste tú',
     caption: 'Llegué cansado del trabajo y, de repente, ahí estabas — y el cansancio dejó de importar.',
     img: 'foto2.jpg', // AQUÍ VA LA IMAGEN 2 — la visita a la casa
   },
   {
     roman: 'III',
-    x: 68, y: 33,
+    x: 42, y: 20,
     title: 'Lo que nos hace reír',
     caption: 'Cada vez que te hago enojar, en el fondo sé que te ríes — como esa vez que te mandé el video manifestando, jajaja.',
     img: 'foto3.jpg', // AQUÍ VA LA IMAGEN 3 — el video manifestando
   },
   {
     roman: 'IV',
-    x: 74, y: 50,
+    x: 50, y: 30,
     title: 'Lo que aprendimos',
     caption: 'Hubo días en que me enojaba por todo, por gente que no merecía nuestro tiempo — y aun así, elegimos quedarnos.',
     img: 'foto4.jpg', // AQUÍ VA LA IMAGEN 4 — las peleas
   },
   {
     roman: 'V',
-    x: 50, y: 72,
+    x: 58, y: 20,
     title: 'Estar ahí',
     caption: 'En diciembre, en medio de algo difícil para ti y tu familia, nos tomamos esa foto — porque incluso en lo duro, quise estar a tu lado.',
     img: 'foto5.jpg', // AQUÍ VA LA IMAGEN 5 — diciembre, la foto juntos
   },
   {
     roman: 'VI',
-    x: 26, y: 50,
+    x: 72, y: 24,
     title: 'Algo que no se marchita',
     caption: 'Tulipanes eternos para tus 17 — porque así quiero que sea esto: algo que dure.',
     img: 'foto6.jpg', // AQUÍ VA LA IMAGEN 6 — los tulipanes eternos
   },
+  {
+    roman: 'VII',
+    x: 78, y: 40,
+    title: 'Lo de todos los días',
+    caption: 'No hizo falta una fecha especial para que te volvieras parte de mi rutina — un mensaje en la mañana, una llamada antes de dormir, y ya. Así de simple, así de nuestro.',
+    img: 'foto7.jpg', // AQUÍ VA LA IMAGEN 7 — cambia este texto y título
+  },
+  {
+    roman: 'VIII',
+    x: 74, y: 58,
+    title: 'Verte crecer',
+    caption: 'Te he visto esforzarte por lo que quieres y salir adelante incluso cuando no era fácil — y cada vez me convenzo más de la persona tan fuerte en la que te has convertido.',
+    img: 'foto8.jpg', // AQUÍ VA LA IMAGEN 8 — cambia este texto y título
+  },
+  {
+    roman: 'IX',
+    x: 64, y: 72,
+    title: 'Lo que todavía falta',
+    caption: 'Nos quedan planes por cumplir y lugares por conocer juntos — y aunque no sé todo lo que viene, sí sé con quién quiero verlo pasar.',
+    img: 'foto9.jpg', // AQUÍ VA LA IMAGEN 9 — cambia este texto y título
+  },
+  {
+    roman: 'X',
+    x: 50, y: 84,
+    title: 'Quién eres para mí',
+    caption: 'Mi pequeña gigante: pequeña en estatura, pero con una fuerza que me sostiene incluso en mis peores días. Eso es lo que veo cuando te miro.',
+    img: 'foto10.jpg', // AQUÍ VA LA IMAGEN 10 — cambia este texto y título
+  },
+  {
+    roman: 'XI',
+    x: 36, y: 72,
+    title: 'Hoy, tus XVIII',
+    caption: 'Once estrellas, un cielo entero, y todavía sigo eligiéndote a ti. Feliz cumpleaños, mi amor — esto apenas empieza.',
+    img: 'foto11.jpg', // AQUÍ VA LA IMAGEN 11 — cambia este texto y título
+  },
 ];
 
 const FINAL_MESSAGE = 'Feliz cumpleaños, mi amor. Gracias por ser siempre tan linda conmigo y por todo lo que compartimos. -- De verdad deseo que la vida nos permita seguir construyendo esto mientras Dios así lo quiera. -- Quiero que nunca dudes de algo: te amo, y mi cariño por ti es real. Pase lo que pase, siempre voy a estar para ti.';
+
+/* ────────────────────────────────────────────────────────
+   CONTADOR DE DÍAS
+   El número que aparece por defecto es el que ya pusiste en
+   el HTML (1383). Si quieres que se actualice solo cada día,
+   escribe aquí la fecha real de inicio en formato AAAA-MM-DD
+   y el contador la reemplazará automáticamente. Si lo dejas
+   vacío (''), se queda el número fijo de siempre.
+──────────────────────────────────────────────────────── */
+const START_DATE = '';
 
 /* ────────────────────────────────────────────────────────
    ESTADO
@@ -78,6 +130,7 @@ const moodGlow    = $('mood-glow');
 const intro       = $('intro');
 const btnBegin    = $('btn-begin');
 const counter     = $('counter');
+const counterNum  = $('counter-num');
 const btnMute     = $('btn-mute');
 const icoOn       = $('ico-sound-on');
 const icoOff      = $('ico-sound-off');
@@ -87,14 +140,13 @@ const hintText     = $('hint-text');
 const hintProgress = $('hint-progress');
 const starsLayer  = $('stars-layer');
 const linesSvg    = $('lines');
-const cardSheet   = $('card-sheet');
-const cardScrim   = $('card-scrim');
-const cardRoman   = $('card-roman');
-const cardPhoto   = $('card-photo');
-const cardPhotoFallback = $('card-photo-fallback');
-const cardTitle   = $('card-title');
-const cardCaption = $('card-caption');
-const cardNext    = $('card-next');
+const memoryScene    = $('memory-scene');
+const memoryPhoto    = $('memory-photo');
+const memoryPhotoFallback = $('memory-photo-fallback');
+const memoryRoman    = $('memory-roman');
+const memoryTitle    = $('memory-title');
+const memoryCaption  = $('memory-caption');
+const memoryNext     = $('memory-next');
 const finalScene  = $('final');
 const finalVideo  = $('final-video');
 const finalMessage = $('final-message');
@@ -153,7 +205,7 @@ function skyLoop() {
 function lerp(a, b, t) { return a + (b - a) * t; }
 
 function setMood(progress) {
-  // progress: 0 (recién empezando) → 1 (las 6 estrellas encendidas)
+  // progress: 0 (recién empezando) → 1 (todas las estrellas encendidas)
   const cool = [58, 77, 143];
   const warm = [232, 185, 101];
   const r = Math.round(lerp(cool[0], warm[0], progress));
@@ -162,6 +214,17 @@ function setMood(progress) {
   const alpha = 0.14 + progress * 0.1;
   moodGlow.style.background =
     `radial-gradient(circle at 50% 42%, rgba(${r},${g},${b},${alpha}), transparent 62%)`;
+}
+
+/* ────────────────────────────────────────────────────────
+   CONTADOR DE DÍAS (opcional y dinámico)
+──────────────────────────────────────────────────────── */
+function updateCounterIfDynamic() {
+  if (!START_DATE) return;
+  const start = new Date(START_DATE + 'T00:00:00');
+  if (isNaN(start.getTime())) return;
+  const diffDays = Math.floor((Date.now() - start.getTime()) / 86400000);
+  if (diffDays > 0) counterNum.textContent = diffDays;
 }
 
 /* ────────────────────────────────────────────────────────
@@ -186,6 +249,11 @@ function buildStars() {
     el.style.top  = m.y + '%';
     el.dataset.idx = i;
 
+    // accesibilidad: se puede activar también con teclado (Enter / Espacio)
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', i === 0 ? '0' : '-1');
+    el.setAttribute('aria-label', `Estrella ${m.roman}: ${m.title}`);
+
     const halo = document.createElement('div');
     halo.className = 'halo';
 
@@ -195,11 +263,18 @@ function buildStars() {
     const roman = document.createElement('span');
     roman.className = 'roman';
     roman.textContent = m.roman;
+    roman.setAttribute('aria-hidden', 'true');
 
     el.appendChild(halo);
     el.appendChild(glyph);
     el.appendChild(roman);
     el.addEventListener('click', () => onStarTap(i, el));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onStarTap(i, el);
+      }
+    });
     starsLayer.appendChild(el);
   });
 }
@@ -209,6 +284,7 @@ function onStarTap(i, el) {
 
   el.classList.remove('next-up', 'dim');
   el.classList.add('lit');
+  el.setAttribute('tabindex', '-1');
 
   if (i > 0) {
     drawConstLine(MEMORIES[i - 1], MEMORIES[i]);
@@ -217,17 +293,18 @@ function onStarTap(i, el) {
   S.litCount = i + 1;
   setMood(S.litCount / MEMORIES.length);
   updateHint(S.litCount);
-  openCard(MEMORIES[i]);
+  openMemory(MEMORIES[i]);
 
   const nextEl = starsLayer.querySelector(`[data-idx="${i + 1}"]`);
   if (nextEl) {
     nextEl.classList.remove('dim');
     nextEl.classList.add('next-up');
+    nextEl.setAttribute('tabindex', '0');
   }
 }
 
 /* ────────────────────────────────────────────────────────
-   PASTILLA DE GUÍA (texto + progreso "I / VI")
+   PASTILLA DE GUÍA (texto + progreso "I / XI")
 ──────────────────────────────────────────────────────── */
 function updateHint(litCount) {
   if (litCount >= MEMORIES.length) {
@@ -265,47 +342,48 @@ function closeHeartLoop() {
 }
 
 /* ────────────────────────────────────────────────────────
-   TARJETA DE RECUERDO
+   ESCENA DE RECUERDO — foto a pantalla completa, tipo cine
 ──────────────────────────────────────────────────────── */
-let cardPendingIdx = -1;
+let memoryPendingIdx = -1;
 
-function openCard(m) {
-  cardPendingIdx = MEMORIES.indexOf(m);
-  cardRoman.textContent = m.roman;
-  cardTitle.textContent = m.title;
-  cardCaption.textContent = m.caption;
+function openMemory(m) {
+  memoryPendingIdx = MEMORIES.indexOf(m);
+  memoryRoman.textContent = `estrella ${m.roman}`;
+  memoryTitle.textContent = m.title;
+  memoryCaption.textContent = m.caption;
 
-  cardPhoto.style.display = 'none';
-  cardPhotoFallback.style.display = 'flex';
+  memoryPhoto.style.display = 'none';
+  memoryPhotoFallback.style.display = 'flex';
+  memoryPhoto.alt = m.title;
   if (m.img) {
-    cardPhoto.src = m.img;
+    memoryPhoto.src = m.img;
   } else {
-    cardPhoto.removeAttribute('src');
+    memoryPhoto.removeAttribute('src');
   }
-  cardPhoto.onload = () => {
-    cardPhoto.style.display = 'block';
-    cardPhotoFallback.style.display = 'none';
+  memoryPhoto.onload = () => {
+    memoryPhoto.style.display = 'block';
+    memoryPhotoFallback.style.display = 'none';
   };
-  cardPhoto.onerror = () => {
-    cardPhoto.style.display = 'none';
-    cardPhotoFallback.style.display = 'flex';
+  memoryPhoto.onerror = () => {
+    memoryPhoto.style.display = 'none';
+    memoryPhotoFallback.style.display = 'flex';
   };
 
-  cardSheet.classList.remove('hidden');
-  requestAnimationFrame(() => cardSheet.classList.add('open'));
+  memoryScene.classList.remove('hidden');
+  requestAnimationFrame(() => memoryScene.classList.add('open'));
 }
 
-function closeCard() {
-  cardSheet.classList.remove('open');
+function closeMemory() {
+  memoryScene.classList.remove('open');
   setTimeout(() => {
-    cardSheet.classList.add('hidden');
-    afterCardClosed();
+    memoryScene.classList.add('hidden');
+    afterMemoryClosed();
   }, 480);
 }
 
-function afterCardClosed() {
-  const wasLast = cardPendingIdx === MEMORIES.length - 1;
-  cardPendingIdx = -1;
+function afterMemoryClosed() {
+  const wasLast = memoryPendingIdx === MEMORIES.length - 1;
+  memoryPendingIdx = -1;
   if (wasLast) {
     closeHeartLoop();
     setTimeout(showFinal, 1500);
@@ -384,14 +462,14 @@ function init() {
   skyLoop();
   setMood(0);
 
+  updateCounterIfDynamic();
   buildStars();
   drawGhostOutline();
   updateHint(0);
 
   btnBegin.addEventListener('click', begin);
   btnMute.addEventListener('click', toggleMute);
-  cardNext.addEventListener('click', closeCard);
-  cardScrim.addEventListener('click', closeCard);
+  memoryNext.addEventListener('click', closeMemory);
   btnReplay.addEventListener('click', restart);
 }
 
