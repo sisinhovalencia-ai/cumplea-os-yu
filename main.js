@@ -82,7 +82,9 @@ const btnMute     = $('btn-mute');
 const icoOn       = $('ico-sound-on');
 const icoOff      = $('ico-sound-off');
 const constellation = $('constellation');
-const hint        = $('hint');
+const hint         = $('hint');
+const hintText     = $('hint-text');
+const hintProgress = $('hint-progress');
 const starsLayer  = $('stars-layer');
 const linesSvg    = $('lines');
 const cardSheet   = $('card-sheet');
@@ -184,14 +186,18 @@ function buildStars() {
     el.style.top  = m.y + '%';
     el.dataset.idx = i;
 
-    const dot = document.createElement('div');
-    dot.className = 'dot';
+    const halo = document.createElement('div');
+    halo.className = 'halo';
+
+    const glyph = document.createElement('div');
+    glyph.className = 'glyph';
 
     const roman = document.createElement('span');
     roman.className = 'roman';
     roman.textContent = m.roman;
 
-    el.appendChild(dot);
+    el.appendChild(halo);
+    el.appendChild(glyph);
     el.appendChild(roman);
     el.addEventListener('click', () => onStarTap(i, el));
     starsLayer.appendChild(el);
@@ -210,6 +216,7 @@ function onStarTap(i, el) {
 
   S.litCount = i + 1;
   setMood(S.litCount / MEMORIES.length);
+  updateHint(S.litCount);
   openCard(MEMORIES[i]);
 
   const nextEl = starsLayer.querySelector(`[data-idx="${i + 1}"]`);
@@ -217,6 +224,20 @@ function onStarTap(i, el) {
     nextEl.classList.remove('dim');
     nextEl.classList.add('next-up');
   }
+}
+
+/* ────────────────────────────────────────────────────────
+   PASTILLA DE GUÍA (texto + progreso "I / VI")
+──────────────────────────────────────────────────────── */
+function updateHint(litCount) {
+  if (litCount >= MEMORIES.length) {
+    hint.classList.add('fade');
+    return;
+  }
+  hintText.textContent = litCount === 0
+    ? 'toca la primera estrella'
+    : 'sigue con la siguiente';
+  hintProgress.textContent = `${MEMORIES[litCount].roman} / ${MEMORIES[MEMORIES.length - 1].roman}`;
 }
 
 /* ────────────────────────────────────────────────────────
@@ -328,7 +349,6 @@ function begin() {
   btnMute.classList.remove('hidden');
   constellation.classList.remove('hidden');
   startAudio();
-  setTimeout(() => hint.classList.add('fade'), 4500);
 }
 
 function restart() {
@@ -340,6 +360,7 @@ function restart() {
   starsLayer.innerHTML = '';
   buildStars();
   drawGhostOutline();
+  updateHint(0);
 
   hint.classList.remove('fade');
   finalScene.classList.add('hidden');
@@ -365,6 +386,7 @@ function init() {
 
   buildStars();
   drawGhostOutline();
+  updateHint(0);
 
   btnBegin.addEventListener('click', begin);
   btnMute.addEventListener('click', toggleMute);
