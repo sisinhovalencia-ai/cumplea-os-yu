@@ -7,17 +7,10 @@
 /* ────────────────────────────────────────────────────────
    ════════  AQUÍ VAN LAS IMÁGENES Y LOS TEXTOS  ════════
    Cada objeto es una estrella/recuerdo, en el orden en que
-   se van a tocar. Para poner tu foto, cambia el valor de
+   se van a encender. Para poner tu foto, cambia el valor de
    "img" por el nombre de tu archivo (debe estar junto a
-   este index.html). Si no pones ninguna, se muestra un
-   espacio en blanco con un ícono — no rompe nada.
-
-   Las estrellas VII a XI ya tienen un texto propio, escrito
-   siguiendo el mismo hilo narrativo que las primeras seis
-   (de cómo empezó, a lo que construyeron, a este cumpleaños
-   XVIII). Revísalos y ajusta cualquier detalle o fecha que
-   quieras hacer más específico — son un punto de partida
-   que puedes editar como texto plano, sin tocar nada más.
+   este index.html). Si falta la foto, se muestra un espacio
+   con un ícono — no rompe nada.
 ──────────────────────────────────────────────────────── */
 const MEMORIES = [
   {
@@ -25,106 +18,106 @@ const MEMORIES = [
     x: 22, y: 40,
     title: 'Donde todo empezó',
     caption: 'Me preguntaste por tu prima sin saber que, sin quererlo, te estaba encontrando a ti. 😌❤️',
-    img: 'foto1.jpg', // AQUÍ VA LA IMAGEN 1 — la tienda
+    img: 'foto1.jpg', // la tienda
   },
   {
     roman: 'II',
     x: 28, y: 24,
     title: 'Llegaste tú',
     caption: 'Llegué cansado del trabajo y, de repente, ahí estabas — y el cansancio dejó de importar.',
-    img: 'foto2.jpg', // AQUÍ VA LA IMAGEN 2 — la visita a la casa
+    img: 'foto2.jpg', // la visita a la casa
   },
   {
     roman: 'III',
     x: 42, y: 20,
     title: 'Lo que nos hace reír',
     caption: 'Cada vez que te hago enojar, en el fondo sé que te ríes — como esa vez que te mandé el video manifestando, jajaja.',
-    img: 'foto3.jpg', // AQUÍ VA LA IMAGEN 3 — el video manifestando
+    img: 'foto3.jpg', // el video manifestando
   },
   {
     roman: 'IV',
     x: 50, y: 30,
     title: 'Lo que aprendimos',
     caption: 'Hubo días en que me enojaba por todo, por gente que no merecía nuestro tiempo — y aun así, elegimos quedarnos.',
-    img: 'foto4.jpg', // AQUÍ VA LA IMAGEN 4 — las peleas
+    img: 'foto4.jpg', // las peleas
   },
   {
     roman: 'V',
     x: 58, y: 20,
     title: 'Estar ahí',
     caption: 'En diciembre, en medio de algo difícil para ti y tu familia, nos tomamos esa foto — porque incluso en lo duro, quise estar a tu lado.',
-    img: 'foto5.jpg', // AQUÍ VA LA IMAGEN 5 — diciembre, la foto juntos
+    img: 'foto5.jpg', // diciembre, la foto juntos
   },
   {
     roman: 'VI',
     x: 72, y: 24,
     title: 'Algo que no se marchita',
     caption: 'Tulipanes eternos para tus 17 — porque así quiero que sea esto: algo que dure.',
-    img: 'foto6.jpg', // AQUÍ VA LA IMAGEN 6 — los tulipanes eternos
+    img: 'foto6.jpg', // los tulipanes eternos
   },
   {
     roman: 'VII',
     x: 78, y: 40,
     title: 'Lo de todos los días',
     caption: 'No hizo falta una fecha especial para que te volvieras parte de mi rutina — un mensaje en la mañana, una llamada antes de dormir, y ya. Así de simple, así de nuestro.',
-    img: 'foto7.jpg', // AQUÍ VA LA IMAGEN 7 — cambia este texto y título
+    img: 'foto7.jpg',
   },
   {
     roman: 'VIII',
     x: 74, y: 58,
     title: 'Verte crecer',
     caption: 'Te he visto esforzarte por lo que quieres y salir adelante incluso cuando no era fácil — y cada vez me convenzo más de la persona tan fuerte en la que te has convertido.',
-    img: 'foto8.jpg', // AQUÍ VA LA IMAGEN 8 — cambia este texto y título
+    img: 'foto8.jpg',
   },
   {
     roman: 'IX',
     x: 64, y: 72,
     title: 'Lo que todavía falta',
     caption: 'Nos quedan planes por cumplir y lugares por conocer juntos — y aunque no sé todo lo que viene, sí sé con quién quiero verlo pasar.',
-    img: 'foto9.jpg', // AQUÍ VA LA IMAGEN 9 — cambia este texto y título
+    img: 'foto9.jpg',
   },
   {
     roman: 'X',
     x: 50, y: 84,
     title: 'Quién eres para mí',
     caption: 'Mi pequeña gigante: pequeña en estatura, pero con una fuerza que me sostiene incluso en mis peores días. Eso es lo que veo cuando te miro.',
-    img: 'foto10.jpg', // AQUÍ VA LA IMAGEN 10 — cambia este texto y título
+    img: 'foto10.jpg',
   },
   {
     roman: 'XI',
     x: 36, y: 72,
     title: 'Hoy, tus XVIII',
     caption: 'Once estrellas, un cielo entero, y todavía sigo eligiéndote a ti. Feliz cumpleaños, mi amor — esto apenas empieza.',
-    img: 'foto11.jpg', // AQUÍ VA LA IMAGEN 11 — cambia este texto y título
+    img: 'foto11.jpg',
   },
 ];
 
+// El "--" separa párrafos en la escena final.
 const FINAL_MESSAGE = 'Feliz cumpleaños, mi amor. Gracias por ser siempre tan linda conmigo y por todo lo que compartimos. -- De verdad deseo que la vida nos permita seguir construyendo esto mientras Dios así lo quiera. -- Quiero que nunca dudes de algo: te amo, y mi cariño por ti es real. Pase lo que pase, siempre voy a estar para ti.';
 
 /* ────────────────────────────────────────────────────────
-   CONTADOR DE DÍAS
-   El número que aparece por defecto es el que ya pusiste en
-   el HTML (1383). Si quieres que se actualice solo cada día,
-   escribe aquí la fecha real de inicio en formato AAAA-MM-DD
-   y el contador la reemplazará automáticamente. Si lo dejas
-   vacío (''), se queda el número fijo de siempre.
+   AJUSTES
 ──────────────────────────────────────────────────────── */
+// Fecha real de inicio (AAAA-MM-DD) para que el contador se actualice solo.
+// Si queda vacío (''), se mantiene el número fijo del HTML (1383).
 const START_DATE = '';
 
-/* ────────────────────────────────────────────────────────
-   AUTO-AVANCE DE LA ESCENA DE RECUERDO
-   Cada recuerdo (foto + texto) pasa solo después de estos
-   segundos, sin que sea necesario tocar "Continuar". Si
-   quieres que sea manual otra vez, deja el valor en 0.
-──────────────────────────────────────────────────────── */
+// Segundos que dura cada recuerdo antes de pasar solo. 0 = solo manual.
 const MEMORY_AUTO_ADVANCE_SECONDS = 8;
+
+const STAR_ANTICIPATION_MS = 550;  // pulso antes de encenderse cada estrella
+const STAR_GAP_MS          = 500;  // pausa entre un recuerdo y el siguiente
+const MEMORY_FADE_MS       = 480;  // debe coincidir con la transición del CSS
+const AUDIO_FADE_MS        = 2000; // entrada suave de la música
+const AUDIO_VOLUME         = 1;
 
 /* ────────────────────────────────────────────────────────
    ESTADO
 ──────────────────────────────────────────────────────── */
 const S = {
-  litCount: 0,      // cuántas estrellas se han tocado
+  litCount: 0,   // cuántas estrellas se han encendido
   started: false,
+  closing: false, // evita cerrar un recuerdo dos veces
 };
 
 /* ────────────────────────────────────────────────────────
@@ -132,55 +125,86 @@ const S = {
 ──────────────────────────────────────────────────────── */
 const $ = id => document.getElementById(id);
 
-const skyCanvas   = $('sky');
-const skyCtx      = skyCanvas.getContext('2d');
-const moodGlow    = $('mood-glow');
-const intro       = $('intro');
-const btnBegin    = $('btn-begin');
-const counter     = $('counter');
-const counterNum  = $('counter-num');
-const btnMute     = $('btn-mute');
-const icoOn       = $('ico-sound-on');
-const icoOff      = $('ico-sound-off');
+const skyCanvas     = $('sky');
+const skyCtx        = skyCanvas.getContext('2d');
+const moodGlow      = $('mood-glow');
+const intro         = $('intro');
+const btnBegin      = $('btn-begin');
+const counter       = $('counter');
+const counterNum    = $('counter-num');
+const btnMute       = $('btn-mute');
+const icoOn         = $('ico-sound-on');
+const icoOff        = $('ico-sound-off');
 const constellation = $('constellation');
-const hint         = $('hint');
-const hintText     = $('hint-text');
-const hintProgress = $('hint-progress');
-const starsLayer  = $('stars-layer');
-const linesSvg    = $('lines');
-const memoryScene    = $('memory-scene');
-const memoryPhoto    = $('memory-photo');
+const hint          = $('hint');
+const hintText      = $('hint-text');
+const hintProgress  = $('hint-progress');
+const starsLayer    = $('stars-layer');
+const linesSvg      = $('lines');
+const memoryScene   = $('memory-scene');
+const memoryPhoto   = $('memory-photo');
 const memoryPhotoFallback = $('memory-photo-fallback');
-const memoryRoman    = $('memory-roman');
-const memoryTitle    = $('memory-title');
-const memoryCaption  = $('memory-caption');
-const memoryNext     = $('memory-next');
-const finalScene  = $('final');
-const finalVideo  = $('final-video');
-const finalMessage = $('final-message');
-const btnReplay   = $('btn-replay');
-const audio       = $('audio');
+const memoryRoman   = $('memory-roman');
+const memoryTitle   = $('memory-title');
+const memoryCaption = $('memory-caption');
+const memoryNext    = $('memory-next');
+const finalScene    = $('final');
+const finalVideo    = $('final-video');
+const finalMessage  = $('final-message');
+const btnReplay     = $('btn-replay');
+const audio         = $('audio');
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /* ────────────────────────────────────────────────────────
-   CIELO ANIMADO DE FONDO (estrellas pequeñas, sin audio)
+   TEMPORIZADORES — todos pasan por aquí para poder
+   cancelarlos juntos al reiniciar (evita que queden
+   "fantasmas" de una vuelta anterior).
+──────────────────────────────────────────────────────── */
+const timers = new Set();
+
+function later(fn, ms) {
+  const id = setTimeout(() => { timers.delete(id); fn(); }, ms);
+  timers.add(id);
+  return id;
+}
+
+function cancelTimer(id) {
+  clearTimeout(id);
+  timers.delete(id);
+}
+
+function clearAllTimers() {
+  timers.forEach(clearTimeout);
+  timers.clear();
+}
+
+/* ────────────────────────────────────────────────────────
+   CIELO ANIMADO DE FONDO
 ──────────────────────────────────────────────────────── */
 let bgStars = [];
+let skyW = 0, skyH = 0, dpr = 1;
+let skyRaf = 0;
 
-function resizeSky() {
-  skyCanvas.width  = window.innerWidth;
-  skyCanvas.height = window.innerHeight;
-  seedBgStars();
+function setupCanvas() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  skyW = window.innerWidth;
+  skyH = window.innerHeight;
+  skyCanvas.width  = Math.round(skyW * dpr);
+  skyCanvas.height = Math.round(skyH * dpr);
+  skyCanvas.style.width  = skyW + 'px';
+  skyCanvas.style.height = skyH + 'px';
+  skyCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
 function seedBgStars() {
-  const n = Math.floor((skyCanvas.width * skyCanvas.height) / 9000);
+  const n = Math.floor((skyW * skyH) / 9000);
   bgStars = [];
   for (let i = 0; i < n; i++) {
     bgStars.push({
-      x: Math.random() * skyCanvas.width,
-      y: Math.random() * skyCanvas.height,
+      x: Math.random() * skyW,
+      y: Math.random() * skyH,
       r: 0.4 + Math.random() * 1.3,
       phase: Math.random() * Math.PI * 2,
       speed: 0.4 + Math.random() * 0.8,
@@ -190,11 +214,11 @@ function seedBgStars() {
 }
 
 function drawSky(t) {
-  skyCtx.clearRect(0, 0, skyCanvas.width, skyCanvas.height);
+  skyCtx.clearRect(0, 0, skyW, skyH);
+  skyCtx.fillStyle = '#fff6e0';
   for (const s of bgStars) {
     const tw = s.base + 0.35 * Math.sin(t * s.speed + s.phase);
     skyCtx.globalAlpha = Math.max(0, Math.min(1, tw));
-    skyCtx.fillStyle = '#fff6e0';
     skyCtx.beginPath();
     skyCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     skyCtx.fill();
@@ -202,9 +226,27 @@ function drawSky(t) {
   skyCtx.globalAlpha = 1;
 }
 
-function skyLoop() {
-  drawSky(performance.now() / 1000);
-  requestAnimationFrame(skyLoop);
+function skyLoop(now) {
+  drawSky(now / 1000);
+  skyRaf = requestAnimationFrame(skyLoop);
+}
+
+function startSky() {
+  cancelAnimationFrame(skyRaf);
+  if (reduceMotion.matches) { drawSky(0); return; } // cielo quieto
+  skyRaf = requestAnimationFrame(skyLoop);
+}
+
+let resizeTimer = 0;
+function onResize() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const widthChanged  = window.innerWidth !== skyW;
+    const heightChanged = Math.abs(window.innerHeight - skyH) > 120; // ignora la barra del navegador móvil
+    setupCanvas();
+    if (widthChanged || heightChanged || !bgStars.length) seedBgStars();
+    if (reduceMotion.matches) drawSky(0);
+  }, 150);
 }
 
 /* ────────────────────────────────────────────────────────
@@ -213,7 +255,6 @@ function skyLoop() {
 function lerp(a, b, t) { return a + (b - a) * t; }
 
 function setMood(progress) {
-  // progress: 0 (recién empezando) → 1 (todas las estrellas encendidas)
   const cool = [58, 77, 143];
   const warm = [232, 185, 101];
   const r = Math.round(lerp(cool[0], warm[0], progress));
@@ -250,13 +291,14 @@ function drawGhostOutline() {
    GENERAR ESTRELLAS DE RECUERDOS
 ──────────────────────────────────────────────────────── */
 function buildStars() {
+  const frag = document.createDocumentFragment();
   MEMORIES.forEach((m, i) => {
     const el = document.createElement('div');
     el.className = 'star-pt dim';
     el.style.left = m.x + '%';
     el.style.top  = m.y + '%';
     el.dataset.idx = i;
-    el.setAttribute('aria-hidden', 'true'); // ya no es interactiva: se enciende sola
+    el.setAttribute('aria-hidden', 'true'); // se enciende sola, no es interactiva
 
     const halo = document.createElement('div');
     halo.className = 'halo';
@@ -267,45 +309,36 @@ function buildStars() {
     const roman = document.createElement('span');
     roman.className = 'roman';
     roman.textContent = m.roman;
-    roman.setAttribute('aria-hidden', 'true');
 
-    el.appendChild(halo);
-    el.appendChild(glyph);
-    el.appendChild(roman);
-    starsLayer.appendChild(el);
+    el.append(halo, glyph, roman);
+    frag.appendChild(el);
   });
+  starsLayer.appendChild(frag);
 }
 
 /* ────────────────────────────────────────────────────────
    ENCENDIDO AUTOMÁTICO DE ESTRELLAS
-   Cada estrella se enciende sola, una tras otra: primero un
-   breve pulso de anticipación (STAR_ANTICIPATION_MS), luego
-   se enciende y se abre su recuerdo. Cuando ese recuerdo se
-   cierra (solo o por el temporizador), se enciende la
-   siguiente automáticamente. No hace falta tocar nada.
+   Pulso de anticipación → se enciende → se abre su recuerdo.
+   Al cerrarse el recuerdo, se enciende la siguiente.
 ──────────────────────────────────────────────────────── */
-const STAR_ANTICIPATION_MS = 550;  // pulso antes de encenderse
-const STAR_GAP_MS = 500;           // pausa entre un recuerdo y el siguiente
-
 function lightStar(i) {
+  if (!S.started || i < 0 || i >= MEMORIES.length) return;
   const el = starsLayer.querySelector(`[data-idx="${i}"]`);
   if (!el) return;
 
   el.classList.remove('dim');
-  el.classList.add('next-up'); // breve destello de anticipación
+  el.classList.add('next-up');
 
-  setTimeout(() => {
+  later(() => {
     el.classList.remove('next-up');
     el.classList.add('lit');
 
-    if (i > 0) {
-      drawConstLine(MEMORIES[i - 1], MEMORIES[i]);
-    }
+    if (i > 0) drawConstLine(MEMORIES[i - 1], MEMORIES[i]);
 
     S.litCount = i + 1;
     setMood(S.litCount / MEMORIES.length);
     updateHint(S.litCount);
-    openMemory(MEMORIES[i]);
+    openMemory(i);
   }, STAR_ANTICIPATION_MS);
 }
 
@@ -320,7 +353,8 @@ function updateHint(litCount) {
   hintText.textContent = litCount === 0
     ? 'encendiendo el cielo…'
     : 'un recuerdo tras otro…';
-  hintProgress.textContent = `${MEMORIES[litCount].roman} / ${MEMORIES[MEMORIES.length - 1].roman}`;
+  hintProgress.textContent =
+    `${MEMORIES[litCount].roman} / ${MEMORIES[MEMORIES.length - 1].roman}`;
 }
 
 /* ────────────────────────────────────────────────────────
@@ -351,66 +385,111 @@ function closeHeartLoop() {
    ESCENA DE RECUERDO — foto a pantalla completa, tipo cine
 ──────────────────────────────────────────────────────── */
 let memoryPendingIdx = -1;
-let memoryAutoTimer = null;
+let memoryAutoTimer = 0;
+let memoryRemainingMs = 0;
+let memoryDeadline = 0;
+let imgToken = 0;
 
-function openMemory(m) {
-  memoryPendingIdx = MEMORIES.indexOf(m);
+function showPhoto() {
+  memoryPhoto.style.display = 'block';
+  memoryPhotoFallback.style.display = 'none';
+}
+
+function hidePhoto() {
+  memoryPhoto.style.display = 'none';
+  memoryPhotoFallback.style.display = 'flex';
+}
+
+function loadMemoryImage(m) {
+  const token = ++imgToken;
+  hidePhoto();
+  memoryPhoto.alt = m.title;
+
+  if (!m.img) {
+    memoryPhoto.onload = memoryPhoto.onerror = null;
+    memoryPhoto.removeAttribute('src');
+    return;
+  }
+
+  // Los manejadores van ANTES del src para no perder el evento si la foto ya está en caché.
+  memoryPhoto.onload  = () => { if (token === imgToken) showPhoto(); };
+  memoryPhoto.onerror = () => { if (token === imgToken) hidePhoto(); };
+  memoryPhoto.src = m.img;
+  if (memoryPhoto.complete && memoryPhoto.naturalWidth > 0) showPhoto();
+}
+
+function preloadNextImage(i) {
+  const next = MEMORIES[i + 1];
+  if (next && next.img) new Image().src = next.img;
+}
+
+function scheduleAutoAdvance(ms) {
+  cancelTimer(memoryAutoTimer);
+  if (ms <= 0) return;
+  memoryRemainingMs = ms;
+  memoryDeadline = performance.now() + ms;
+  memoryAutoTimer = later(closeMemory, ms);
+}
+
+function openMemory(i) {
+  const m = MEMORIES[i];
+  memoryPendingIdx = i;
+  S.closing = false;
+
   memoryRoman.textContent = `estrella ${m.roman}`;
   memoryTitle.textContent = m.title;
   memoryCaption.textContent = m.caption;
-
-  memoryPhoto.style.display = 'none';
-  memoryPhotoFallback.style.display = 'flex';
-  memoryPhoto.alt = m.title;
-  if (m.img) {
-    memoryPhoto.src = m.img;
-  } else {
-    memoryPhoto.removeAttribute('src');
-  }
-  memoryPhoto.onload = () => {
-    memoryPhoto.style.display = 'block';
-    memoryPhotoFallback.style.display = 'none';
-  };
-  memoryPhoto.onerror = () => {
-    memoryPhoto.style.display = 'none';
-    memoryPhotoFallback.style.display = 'flex';
-  };
+  loadMemoryImage(m);
+  preloadNextImage(i);
 
   memoryScene.classList.remove('hidden');
-  requestAnimationFrame(() => memoryScene.classList.add('open'));
+  requestAnimationFrame(() => {
+    memoryScene.classList.add('open');
+    memoryNext.focus({ preventScroll: true });
+  });
 
-  clearTimeout(memoryAutoTimer);
-  if (MEMORY_AUTO_ADVANCE_SECONDS > 0) {
-    memoryAutoTimer = setTimeout(closeMemory, MEMORY_AUTO_ADVANCE_SECONDS * 1000);
-  }
+  scheduleAutoAdvance(MEMORY_AUTO_ADVANCE_SECONDS * 1000);
 }
 
 function closeMemory() {
-  clearTimeout(memoryAutoTimer);
+  if (S.closing || memoryPendingIdx < 0) return;
+  S.closing = true;
+  cancelTimer(memoryAutoTimer);
   memoryScene.classList.remove('open');
-  setTimeout(() => {
+  later(() => {
     memoryScene.classList.add('hidden');
     afterMemoryClosed();
-  }, 480);
+  }, MEMORY_FADE_MS);
 }
 
 function afterMemoryClosed() {
-  const wasLast = memoryPendingIdx === MEMORIES.length - 1;
-  const justClosedIdx = memoryPendingIdx;
+  const idx = memoryPendingIdx;
   memoryPendingIdx = -1;
-  if (wasLast) {
+  S.closing = false;
+  if (idx < 0) return;
+
+  if (idx === MEMORIES.length - 1) {
     closeHeartLoop();
-    setTimeout(showFinal, 1500);
+    later(showFinal, 1500);
   } else {
-    setTimeout(() => lightStar(justClosedIdx + 1), STAR_GAP_MS);
+    later(() => lightStar(idx + 1), STAR_GAP_MS);
   }
 }
 
 /* ────────────────────────────────────────────────────────
    ESCENA FINAL
 ──────────────────────────────────────────────────────── */
+function renderFinalMessage() {
+  finalMessage.textContent = '';
+  const parts = FINAL_MESSAGE.split(/\s*--\s*/).filter(Boolean);
+  parts.forEach((part, i) => {
+    if (i > 0) finalMessage.append(document.createElement('br'), document.createElement('br'));
+    finalMessage.append(document.createTextNode(part));
+  });
+}
+
 function showFinal() {
-  finalMessage.textContent = FINAL_MESSAGE;
+  renderFinalMessage();
   constellation.classList.add('hidden');
   counter.classList.add('hidden');
   finalScene.classList.remove('hidden');
@@ -421,14 +500,40 @@ function showFinal() {
 /* ────────────────────────────────────────────────────────
    AUDIO
 ──────────────────────────────────────────────────────── */
+let audioFadeRaf = 0;
+
+function fadeAudioTo(target, ms) {
+  cancelAnimationFrame(audioFadeRaf);
+  if (reduceMotion.matches || ms <= 0) { audio.volume = target; return; }
+  const from = audio.volume;
+  const t0 = performance.now();
+  const step = now => {
+    const k = Math.min(1, (now - t0) / ms);
+    audio.volume = from + (target - from) * k;
+    if (k < 1) audioFadeRaf = requestAnimationFrame(step);
+  };
+  audioFadeRaf = requestAnimationFrame(step);
+}
+
 function startAudio() {
-  audio.play().catch(() => { /* el usuario puede activarlo luego con el botón de música */ });
+  audio.volume = 0;
+  audio.play()
+    .then(() => fadeAudioTo(AUDIO_VOLUME, AUDIO_FADE_MS))
+    .catch(() => { audio.volume = AUDIO_VOLUME; /* se puede activar luego con el botón de música */ });
+}
+
+function syncMuteUI() {
+  icoOn.style.display  = audio.muted ? 'none' : '';
+  icoOff.style.display = audio.muted ? '' : 'none';
+  btnMute.setAttribute('aria-pressed', String(audio.muted));
+  btnMute.setAttribute('aria-label', audio.muted ? 'Activar música' : 'Silenciar música');
 }
 
 function toggleMute() {
   audio.muted = !audio.muted;
-  icoOn.style.display  = audio.muted ? 'none' : '';
-  icoOff.style.display = audio.muted ? '' : 'none';
+  // Si el navegador bloqueó el autoplay, este toque sirve para arrancar la música.
+  if (!audio.muted && audio.paused && S.started) startAudio();
+  syncMuteUI();
 }
 
 /* ────────────────────────────────────────────────────────
@@ -438,27 +543,34 @@ function begin() {
   if (S.started) return;
   S.started = true;
   intro.classList.add('leaving');
-  setTimeout(() => intro.classList.add('hidden'), 700);
+  later(() => intro.classList.add('hidden'), 700);
   counter.classList.remove('hidden');
   btnMute.classList.remove('hidden');
   constellation.classList.remove('hidden');
   startAudio();
-  setTimeout(() => lightStar(0), 900); // deja ver el cielo un instante antes de la primera estrella
+  later(() => lightStar(0), 900); // deja ver el cielo un instante antes de la primera estrella
 }
 
 function restart() {
-  clearTimeout(memoryAutoTimer);
+  clearAllTimers();
+  cancelAnimationFrame(audioFadeRaf);
+
   S.litCount = 0;
   S.started = false;
+  S.closing = false;
+  memoryPendingIdx = -1;
+  imgToken++;
   setMood(0);
 
-  linesSvg.innerHTML = '';
-  starsLayer.innerHTML = '';
+  linesSvg.textContent = '';
+  starsLayer.textContent = '';
   buildStars();
   drawGhostOutline();
   updateHint(0);
 
   hint.classList.remove('fade');
+  memoryScene.classList.remove('open');
+  memoryScene.classList.add('hidden');
   finalScene.classList.add('hidden');
   constellation.classList.add('hidden');
   counter.classList.add('hidden');
@@ -469,21 +581,58 @@ function restart() {
   audio.currentTime = 0;
   finalVideo.pause();
   finalVideo.currentTime = 0;
+
+  updateCounterIfDynamic();
+  btnBegin.focus({ preventScroll: true });
+}
+
+/* ────────────────────────────────────────────────────────
+   EVENTOS GLOBALES
+──────────────────────────────────────────────────────── */
+// Con la pestaña oculta: se pausa el cielo y el temporizador del recuerdo.
+function onVisibilityChange() {
+  if (document.hidden) {
+    cancelAnimationFrame(skyRaf);
+    if (memoryAutoTimer && timers.has(memoryAutoTimer)) {
+      memoryRemainingMs = Math.max(0, memoryDeadline - performance.now());
+      cancelTimer(memoryAutoTimer);
+    }
+  } else {
+    startSky();
+    if (memoryPendingIdx >= 0 && !S.closing && MEMORY_AUTO_ADVANCE_SECONDS > 0) {
+      scheduleAutoAdvance(memoryRemainingMs || 1000);
+    }
+  }
+}
+
+// Teclado: Esc o → pasan al siguiente recuerdo.
+function onKeyDown(e) {
+  if (memoryScene.classList.contains('hidden')) return;
+  if (e.key === 'Escape' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    closeMemory();
+  }
 }
 
 /* ────────────────────────────────────────────────────────
    ARRANQUE
 ──────────────────────────────────────────────────────── */
 function init() {
-  resizeSky();
-  window.addEventListener('resize', resizeSky);
-  skyLoop();
+  setupCanvas();
+  seedBgStars();
+  startSky();
   setMood(0);
 
   updateCounterIfDynamic();
   buildStars();
   drawGhostOutline();
   updateHint(0);
+  syncMuteUI();
+
+  window.addEventListener('resize', onResize);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  document.addEventListener('keydown', onKeyDown);
+  reduceMotion.addEventListener('change', startSky);
 
   btnBegin.addEventListener('click', begin);
   btnMute.addEventListener('click', toggleMute);
@@ -491,4 +640,8 @@ function init() {
   btnReplay.addEventListener('click', restart);
 }
 
-document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+     }
