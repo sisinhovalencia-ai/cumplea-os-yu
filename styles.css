@@ -30,6 +30,11 @@
   --f-display: 'Fraunces', Georgia, serif;
   --f-body:    'Inter', system-ui, sans-serif;
   --f-hand:    'Caveat', cursive;
+
+  /* tipografías exclusivas de la portada */
+  --f-script:  'Great Vibes', 'Snell Roundhand', cursive;
+  --f-caps:    'Cinzel', 'Trajan Pro', Georgia, serif;
+  --f-serif-i: 'Cormorant Garamond', Georgia, serif;
 }
 
 *, *::before, *::after {
@@ -151,7 +156,8 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 16px clamp(20px, 8vw, 36px);
+  padding: clamp(150px, 30vh, 280px) clamp(20px, 8vw, 36px) 16px;
+  padding-top: clamp(150px, 30dvh, 280px); /* deja arriba el espacio de la constelación */
   z-index: 10;
   transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s;
 }
@@ -160,35 +166,63 @@ button {
 .ornament { color: var(--gold); opacity: 0.8; margin-bottom: clamp(10px, 3.4vh, 18px); }
 .ornament svg { width: clamp(80px, 24vw, 110px); height: auto; }
 
+/* ── TIPOGRAFÍA DE LA PORTADA ─────────────────────────────
+   Great Vibes (script) para "mi pequeña gigante", Cinzel
+   (mayúsculas grabadas, aire de carta estelar) para el título
+   y las etiquetas, Cormorant Garamond cursiva para el subtítulo.
+   Para probar otra combinación basta cambiar --f-script,
+   --f-caps o --f-serif-i en :root.
+──────────────────────────────────────────────────────── */
 .eyebrow {
-  font-size: clamp(11px, 3.3vw, 13px);
-  letter-spacing: 0.18em;
+  font-family: var(--f-caps);
+  font-weight: 400;
+  font-size: clamp(10px, 2.9vw, 12px);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--rose);
   margin-bottom: clamp(9px, 2.6vh, 14px);
 }
 .title {
-  font-family: var(--f-display);
-  font-weight: 500;
-  font-size: clamp(28px, 9vw, 42px);
   line-height: 1.15;
   color: var(--ink);
   text-wrap: balance;
 }
 .title em {
   display: block;
-  font-style: italic;
-  font-weight: 400;
+  font-style: normal; /* estas fuentes no tienen cursiva real */
   color: var(--gold);
-  font-size: 0.92em;
+}
+.title-script {
+  font-family: var(--f-script);
+  font-weight: 400;
+  font-size: clamp(38px, 12vw, 56px);
+  line-height: 1.05;
+  margin-bottom: clamp(6px, 1.6vh, 12px);
+  text-shadow: 0 0 28px rgba(232,185,101,0.28);
+}
+.title-caps {
+  font-family: var(--f-caps);
+  font-weight: 500;
+  font-size: clamp(24px, 7.4vw, 34px);
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  margin-top: clamp(4px, 1.2vh, 10px);
+}
+.title-caps em {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 26px rgba(232,185,101,0.32);
 }
 .sub {
-  margin-top: clamp(12px, 3vh, 20px);
-  font-size: clamp(13px, 3.6vw, 14.5px);
+  font-family: var(--f-serif-i);
+  font-style: italic;
+  font-weight: 400;
+  margin-top: clamp(14px, 3.2vh, 22px);
+  font-size: clamp(16px, 4.6vw, 19px);
   color: var(--ink-dim);
   letter-spacing: 0.01em;
-  max-width: min(280px, 84vw);
-  line-height: 1.6;
+  max-width: min(300px, 84vw);
+  line-height: 1.45;
   text-wrap: balance;
 }
 
@@ -207,8 +241,8 @@ button {
 @media (hover: hover) {
   #btn-begin:hover { border-color: rgba(232,185,101,0.75); background: rgba(232,185,101,0.06); }
 }
-.btn-label { font-family: var(--f-display); font-size: clamp(14px, 4.2vw, 16px); color: var(--gold); letter-spacing: 0.02em; }
-.btn-sub { font-size: clamp(10px, 2.9vw, 11px); color: var(--ink-dim); letter-spacing: 0.05em; text-transform: uppercase; }
+.btn-label { font-family: var(--f-caps); font-weight: 500; font-size: clamp(12px, 3.5vw, 14px); color: var(--gold); letter-spacing: 0.16em; text-transform: uppercase; }
+.btn-sub { font-family: var(--f-serif-i); font-style: italic; font-size: clamp(13px, 3.6vw, 15px); color: var(--ink-dim); letter-spacing: 0.03em; }
 
 /* ── ENTRADA ESCALONADA DE LA PORTADA ─────────────────────
    Cada elemento aparece uno tras otro, de arriba hacia abajo.
@@ -644,6 +678,7 @@ button:focus-visible {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
   }
@@ -666,13 +701,16 @@ button:focus-visible {
    márgenes verticales necesitan ayuda extra.
 ──────────────────────────────────────────────────────── */
 @media (max-height: 700px) {
-  .title { font-size: clamp(24px, 7vw, 36px); }
+  #intro { padding-top: clamp(110px, 22vh, 160px); padding-top: clamp(110px, 22dvh, 160px); }
+  .title-script { font-size: clamp(34px, 10.5vw, 48px); }
+  .title-caps { font-size: clamp(21px, 6.4vw, 29px); }
   .ornament svg { width: clamp(64px, 16vw, 90px); }
   #btn-begin { margin-top: 20px; }
   #constellation { gap: 16px; }
   #final-message { font-size: clamp(15.5px, 4.8vw, 19px); line-height: 1.55; }
 }
 @media (max-height: 560px) {
+  #intro-sky { opacity: 0.4; } /* en horizontal la constelación queda detrás del texto */
   #intro { padding-top: 8px; padding-bottom: 8px; }
   .ornament { margin-bottom: 6px; }
   .eyebrow { margin-bottom: 6px; }
@@ -704,4 +742,56 @@ button:focus-visible {
     width: min(78vw, 62vh, 380px);
     width: min(78vw, 62dvh, 380px);
   }
+}
+
+/* ── CONSTELACIÓN DE LA PORTADA: CAPRICORNIO ──────────────
+   main.js dibuja dentro de #intro-sky la constelación de
+   Capricornio (la cabra marina): sus estrellas se unen con un
+   trazo que va recorriendo la figura, sobre un resplandor azul
+   de nebulosa y polvo de estrellas. El lienzo (100 × 180) se
+   ajusta a la pantalla alineado arriba, y el texto de la portada
+   baja un poco (padding-top de #intro) para no pisarla.
+   Se apaga junto con la portada.
+──────────────────────────────────────────────────────── */
+#intro-sky {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 9;
+  pointer-events: none;
+  animation: isky-in 1.8s ease 0.1s backwards;
+  transition: opacity 0.7s ease;
+}
+#intro.leaving ~ #intro-sky { opacity: 0; }
+#intro.hidden ~ #intro-sky { display: none; }
+
+@keyframes isky-in      { from { opacity: 0; } to { opacity: 1; } }
+@keyframes isky-draw    { to { stroke-dashoffset: 0; } }
+@keyframes isky-twinkle { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+
+.isky-dust { fill: var(--star); opacity: 0.55; }
+.isky-halo { fill: rgba(232,185,101,0.14); }
+.isky-star { fill: var(--star); }
+.isky-star.gold { fill: var(--gold); }
+.isky-star.field { fill-opacity: 0.7; }
+.isky-tw { animation: isky-twinkle 3.6s ease-in-out infinite; }
+
+.isky-line {
+  fill: none;
+  stroke: #b9ccff;
+  stroke-opacity: 0.8;
+  stroke-width: 0.22;
+  stroke-linecap: round;
+  stroke-dasharray: 1 1;   /* con pathLength="1": la línea entera = 1 */
+  stroke-dashoffset: 1;
+  animation: isky-draw 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.isky-line.glow { stroke-width: 0.9; stroke-opacity: 0.13; }
+
+.isky-label {
+  font-family: var(--f-caps);
+  font-size: 2.4px;
+  letter-spacing: 0.9px;
+  fill: #cfe0ff;
+  fill-opacity: 0.6;
+  animation: isky-in 1.4s ease 4.2s backwards;
    }
