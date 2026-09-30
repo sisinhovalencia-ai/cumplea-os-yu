@@ -5,12 +5,15 @@
    CALIBRACIÓN RESPONSIVE
    Los tamaños de texto y algunos espaciados usan clamp()
    (mínimo, valor fluido en vw, máximo), así que se ajustan
-   solos entre celulares chicos (~320px) y pantallas grandes,
-   sin saltos bruscos. El límite superior de cada clamp() es
-   el tamaño "de escritorio" que ya se veía bien; el límite
-   inferior es lo mínimo legible en un teléfono pequeño.
+   solos entre celulares chicos (~320px) y pantallas grandes.
    Además hay reglas puntuales para pantallas muy angostas y
    para celulares en horizontal (poca altura).
+
+   NOTA SOBRE .hidden
+   Las capas ocultas ahora también pasan a visibility:hidden
+   (con transición, para no cortar los fundidos). Así no se
+   pueden enfocar con el teclado ni las lee un lector de
+   pantalla mientras están invisibles.
 ════════════════════════════════════════════════════════ */
 
 :root {
@@ -38,6 +41,7 @@ html, body {
   height: 100%; width: 100%;
   height: 100dvh; /* evita huecos por la barra del navegador en móvil */
   overflow: hidden;
+  overscroll-behavior: none; /* sin rebote ni "tirar para recargar" */
   background: var(--sky-deep);
 }
 body {
@@ -46,12 +50,13 @@ body {
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  touch-action: manipulation; /* sin zoom por doble toque; el pellizco sigue funcionando */
 }
 button {
   font-family: inherit;
   background: none; border: none; color: inherit;
   cursor: pointer;
-  touch-action: manipulation; /* toques más inmediatos en móvil */
+  touch-action: manipulation;
 }
 
 /* ── CIELO DE FONDO ──────────────────────────────────── */
@@ -70,9 +75,8 @@ button {
 }
 
 /* ── COLUMNA CENTRAL ──────────────────────────────────
-   min(480px, 100vw): en celulares ocupa todo el ancho de
-   pantalla; en tablets y PC se queda como una columna tipo
-   "app" centrada, en vez de estirarse por toda la pantalla.
+   En celulares ocupa todo el ancho; en tablets y PC se
+   queda como una columna tipo "app" centrada.
 ──────────────────────────────────────────────────────── */
 #stage {
   position: fixed;
@@ -90,7 +94,7 @@ button {
   left: 0; right: 0;
   text-align: center;
   z-index: 20;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.8s ease, visibility 0.8s;
 }
 #counter-num {
   font-family: var(--f-hand);
@@ -105,23 +109,39 @@ button {
   color: var(--ink-dim);
 }
 
-/* ── BOTÓN DE MÚSICA ──────────────────────────────────── */
+/* ── BOTÓN DE MÚSICA ──────────────────────────────────
+   Vive FUERA de #stage (en el HTML) y va fijo a la ventana
+   con z-index alto, para seguir al alcance mientras se ve
+   un recuerdo o la escena final. El fondo tenue lo mantiene
+   legible sobre cualquier foto.
+──────────────────────────────────────────────────────── */
 #btn-mute {
-  position: absolute;
-  top: max(16px, env(safe-area-inset-top));
-  right: max(14px, env(safe-area-inset-right));
-  z-index: 20;
-  width: 38px; height: 38px;
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 60;
+  width: 44px; height: 44px;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: var(--ink-dim);
-  opacity: 0.8;
-  transition: opacity 0.8s ease, color 0.3s ease;
+  background: rgba(7,10,22,0.38);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0.85;
+  transition: opacity 0.8s ease, visibility 0.8s, color 0.3s ease, background 0.3s ease;
 }
 #btn-mute svg { width: 19px; height: 19px; }
 #btn-mute:active { color: var(--gold); }
+@media (hover: hover) {
+  #btn-mute:hover { color: var(--gold); background: rgba(7,10,22,0.55); }
+}
 
 /* ── ESTADOS GENERALES ────────────────────────────────── */
-.hidden { opacity: 0 !important; pointer-events: none !important; }
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden;
+}
 
 /* ── PORTADA ──────────────────────────────────────────── */
 #intro {
@@ -133,7 +153,7 @@ button {
   text-align: center;
   padding: 16px clamp(20px, 8vw, 36px);
   z-index: 10;
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition: opacity 0.7s ease, transform 0.7s ease, visibility 0.7s;
 }
 #intro.leaving { opacity: 0; transform: scale(0.97); }
 
@@ -153,6 +173,7 @@ button {
   font-size: clamp(28px, 9vw, 42px);
   line-height: 1.15;
   color: var(--ink);
+  text-wrap: balance;
 }
 .title em {
   display: block;
@@ -168,6 +189,7 @@ button {
   letter-spacing: 0.01em;
   max-width: min(280px, 84vw);
   line-height: 1.6;
+  text-wrap: balance;
 }
 
 #btn-begin {
@@ -182,13 +204,15 @@ button {
   transition: border-color 0.3s ease, transform 0.2s ease, background 0.3s ease;
 }
 #btn-begin:active { transform: scale(0.97); background: rgba(232,185,101,0.08); }
+@media (hover: hover) {
+  #btn-begin:hover { border-color: rgba(232,185,101,0.75); background: rgba(232,185,101,0.06); }
+}
 .btn-label { font-family: var(--f-display); font-size: clamp(14px, 4.2vw, 16px); color: var(--gold); letter-spacing: 0.02em; }
 .btn-sub { font-size: clamp(10px, 2.9vw, 11px); color: var(--ink-dim); letter-spacing: 0.05em; text-transform: uppercase; }
 
 /* ── ENTRADA ESCALONADA DE LA PORTADA ─────────────────────
-   Cada elemento aparece uno tras otro, de arriba hacia abajo,
-   como si el cielo se fuera revelando. El ornamento superior
-   además queda con un resplandor suave y continuo. */
+   Cada elemento aparece uno tras otro, de arriba hacia abajo.
+   El ornamento superior además respira con un resplandor.  */
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -219,7 +243,7 @@ button {
   justify-content: center;
   gap: clamp(18px, 4.5vh, 34px);
   padding: 12px;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.8s ease, visibility 0.8s;
 }
 
 /* pastilla de guía + progreso, mismo lenguaje que el botón de portada */
@@ -231,6 +255,7 @@ button {
   border: 1px solid rgba(232,185,101,0.28);
   border-radius: 999px;
   background: rgba(17,22,44,0.35);
+  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
@@ -251,12 +276,13 @@ button {
   white-space: nowrap;
 }
 
-/* el marco nunca se sale de la pantalla: se limita tanto por
-   ancho (vw) como por alto (vh), lo que resuelve automática-
-   mente el caso de celulares en horizontal con poca altura */
+/* el marco nunca se sale de la pantalla: se limita por ancho
+   (vw) y por alto (vh/dvh), lo que resuelve el caso de
+   celulares en horizontal con poca altura */
 #constellation-frame {
   position: relative;
   width: min(82vw, 62vh, 360px);
+  width: min(82vw, 62dvh, 360px);
   aspect-ratio: 0.82;
 }
 
@@ -287,12 +313,18 @@ button {
   width: 100%; height: 100%;
   z-index: 9;
 }
+
+/* Línea que se va dibujando entre estrellas.
+   Sin "non-scaling-stroke" a propósito: main.js anima el trazo
+   con stroke-dasharray/offset medidos en unidades del viewBox,
+   y con non-scaling-stroke el navegador los leería en píxeles
+   (la línea quedaría a rayas). El grosor está calibrado para
+   verse cercano a 1px en celular. */
 .constline {
   fill: none;
   stroke: var(--gold);
-  stroke-width: 0.45;
+  stroke-width: 0.32;
   stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
   opacity: 0.85;
   filter: drop-shadow(0 0 2px rgba(232,185,101,0.5));
 }
@@ -308,14 +340,14 @@ button {
 
 #stars-layer { position: absolute; inset: 0; z-index: 10; }
 
-/* 40x40 se mantiene fijo a propósito: es el tamaño mínimo
-   recomendado para que un dedo lo toque cómodo en cualquier
-   celular, sin importar qué tan chico sea el marco. */
+/* Las estrellas se encienden solas (main.js), no se tocan:
+   por eso no reciben eventos de puntero. */
 .star-pt {
   position: absolute;
   width: 40px; height: 40px;
   transform: translate(-50%, -50%);
   display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
 }
 
 /* halo difuso detrás del destello, da profundidad sin recargar */
@@ -358,7 +390,7 @@ button {
   transform: scale(0.7);
 }
 
-/* siguiente estrella a tocar: la única que invita a la acción */
+/* estrella a punto de encenderse: el pulso de anticipación */
 .star-pt.next-up .glyph {
   background: var(--gold);
   transform: scale(1);
@@ -404,16 +436,17 @@ button {
 }
 
 /* ── ESCENA DE RECUERDO (pantalla completa, tipo cine) ────
-   Misma sensación que #final: la foto ocupa todo, con un
-   ligero movimiento tipo "Ken Burns" y el texto flotando
-   sobre un velo de lectura en la parte baja.
+   La foto ocupa todo, con un ligero movimiento tipo
+   "Ken Burns" (8s, igual que MEMORY_AUTO_ADVANCE_SECONDS) y
+   el texto flotando sobre un velo de lectura abajo.
+   El fundido (.48s) coincide con MEMORY_FADE_MS de main.js.
 ──────────────────────────────────────────────────────── */
 #memory-scene {
   position: fixed; inset: 0;
   z-index: 40;
   overflow: hidden;
   background: var(--sky-deep);
-  transition: opacity 0.5s ease;
+  transition: opacity 0.48s ease, visibility 0.48s;
 }
 #memory-photo {
   position: absolute; inset: 0;
@@ -500,12 +533,14 @@ button {
   font-size: clamp(19px, 6vw, 25px);
   color: var(--ink);
   margin-bottom: 12px;
+  text-wrap: balance;
 }
 #memory-caption {
   font-size: clamp(13.5px, 3.8vw, 15px);
   line-height: 1.68;
   color: var(--ink-dim);
   max-width: min(320px, 86vw);
+  text-wrap: pretty;
 }
 #memory-next {
   margin-top: clamp(18px, 4vh, 26px);
@@ -516,39 +551,50 @@ button {
   border: 1px solid rgba(232,185,101,0.4);
   border-radius: 999px;
   background: rgba(7,10,22,0.25);
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   transition: transform 0.2s ease, background 0.3s ease;
 }
 #memory-next:active { transform: scale(0.96); background: rgba(232,185,101,0.12); }
-
-@media (prefers-reduced-motion: reduce) {
-  #memory-photo { transition: opacity 0.4s ease; transform: none !important; filter: saturate(0.94) brightness(0.92) !important; }
-  .frame-corner { transition: opacity 0.4s ease; transform: none !important; }
+@media (hover: hover) {
+  #memory-next:hover { background: rgba(232,185,101,0.12); }
 }
 
-/* ── ESCENA FINAL ─────────────────────────────────────── */
+/* ── ESCENA FINAL ─────────────────────────────────────────
+   Video y velo van fijos a la ventana; el texto vive en un
+   contenedor que se centra con margin:auto y, si en una
+   pantalla baja no cabe, la escena se desplaza en vez de
+   cortarse por arriba y por abajo.
+──────────────────────────────────────────────────────── */
 #final {
   position: fixed; inset: 0;
   z-index: 30;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
   padding: 16px clamp(20px, 8vw, 36px);
   text-align: center;
-  overflow: hidden;
-  transition: opacity 1.1s ease;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transition: opacity 1.1s ease, visibility 1.1s;
 }
 #final-video {
-  position: absolute; inset: 0;
+  position: fixed; inset: 0;
   width: 100%; height: 100%;
   border-radius: 30px;
   object-fit: cover;
   z-index: 0;
 }
 #final-scrim {
-  position: absolute; inset: 0;
+  position: fixed; inset: 0;
   z-index: 1;
   background: linear-gradient(180deg, rgba(7,10,22,0.55) 0%, rgba(7,10,22,0.72) 55%, rgba(7,10,22,0.55) 100%);
 }
-#final-inner { position: relative; z-index: 2; max-width: min(340px, 88vw); }
+#final-inner {
+  position: relative; z-index: 2;
+  margin: auto;
+  padding: 20px 0;
+  max-width: min(340px, 88vw);
+}
 .final-eyebrow {
   font-size: clamp(11px, 3.3vw, 13px);
   letter-spacing: 0.18em;
@@ -577,28 +623,36 @@ button {
   text-transform: uppercase;
   color: var(--ink-dim);
   border-bottom: 1px solid rgba(170,178,207,0.35);
-  padding-bottom: 3px;
+  padding: 8px 2px 3px;
   transition: color 0.3s ease;
 }
 #btn-replay:active { color: var(--gold); }
+@media (hover: hover) {
+  #btn-replay:hover { color: var(--gold); }
+}
 
 /* ── ACCESIBILIDAD ────────────────────────────────────── */
 button:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
-.star-pt:focus-visible .glyph {
-  outline: 2px solid var(--gold);
-  outline-offset: 4px;
-  border-radius: 50%;
-}
+
+/* Movimiento reducido: sin desplazamientos ni bucles.
+   animation-iteration-count:1 evita que los pulsos infinitos
+   (estrella, ornamento) se conviertan en parpadeo. */
 @media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+  #memory-photo { transform: none !important; filter: saturate(0.94) brightness(0.92) !important; }
+  .frame-corner { transform: none !important; }
 }
 
 /* ── CELULARES MUY PEQUEÑOS (≤360px de ancho) ─────────────
-   iPhone SE, Android de gama baja, etc. Se aprieta lo que
-   los clamp() por sí solos no alcanzan a resolver bien.
+   iPhone SE, Android de gama baja, etc.
 ──────────────────────────────────────────────────────── */
 @media (max-width: 360px) {
   #constellation { gap: 14px; }
@@ -607,15 +661,16 @@ button:focus-visible {
   #btn-begin { margin-top: 22px; }
 }
 
-/* ── CELULARES EN HORIZONTAL / PANTALLAS BAJAS ────────────
-   La imagen y el marco ya se limitan solos con vh, pero el
-   texto y los márgenes verticales necesitan ayuda extra.
+/* ── PANTALLAS BAJAS Y CELULARES EN HORIZONTAL ───────────
+   El marco ya se limita solo con vh; el texto y los
+   márgenes verticales necesitan ayuda extra.
 ──────────────────────────────────────────────────────── */
 @media (max-height: 700px) {
   .title { font-size: clamp(24px, 7vw, 36px); }
   .ornament svg { width: clamp(64px, 16vw, 90px); }
   #btn-begin { margin-top: 20px; }
   #constellation { gap: 16px; }
+  #final-message { font-size: clamp(15.5px, 4.8vw, 19px); line-height: 1.55; }
 }
 @media (max-height: 560px) {
   #intro { padding-top: 8px; padding-bottom: 8px; }
@@ -625,9 +680,13 @@ button:focus-visible {
   #btn-begin { margin-top: 14px; padding-top: 10px; padding-bottom: 10px; }
   #constellation { gap: 10px; }
   #hint { padding: 5px 12px; }
+  .ornament.small { display: none; }
+  #memory-inner { padding-bottom: max(14px, env(safe-area-inset-bottom)); }
   #memory-title { margin-bottom: 6px; }
-  #memory-caption { line-height: 1.45; }
+  #memory-caption { line-height: 1.45; max-width: min(560px, 90vw); }
+  #memory-next { margin-top: 12px; padding: 8px 20px; }
   #final-message { line-height: 1.4; }
+  #final-inner { max-width: min(520px, 90vw); }
   #final-sign { margin-top: 10px; }
   #btn-replay { margin-top: 16px; }
 }
@@ -637,9 +696,12 @@ button:focus-visible {
 }
 
 /* ── TABLETS Y PC (≥600px de ancho) ───────────────────────
-   El marco de la constelación gana un poco más de aire,
-   ya que #stage sigue tope en 480px y hay pantalla de sobra.
+   #stage sigue con tope en 480px; el marco gana un poco
+   más de aire.
 ──────────────────────────────────────────────────────── */
 @media (min-width: 600px) {
-  #constellation-frame { width: min(78vw, 62vh, 380px); }
-}
+  #constellation-frame {
+    width: min(78vw, 62vh, 380px);
+    width: min(78vw, 62dvh, 380px);
+  }
+   }
