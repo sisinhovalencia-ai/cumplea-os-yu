@@ -2,10 +2,18 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="color-scheme" content="dark"/>
 <meta name="theme-color" content="#070a16"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="description" content="Nuestra Constelación — un cielo de recuerdos para Yurany."/>
+<meta property="og:title" content="Nuestra Constelación"/>
+<meta property="og:description" content="Un cielo de recuerdos, hecho para ti."/>
+<meta property="og:type" content="website"/>
 <title>Nuestra Constelación</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,400;1,9..144,500&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -13,50 +21,56 @@
 </head>
 <body>
 
+<noscript>
+  <p style="position:fixed;inset:0;display:grid;place-items:center;padding:2rem;text-align:center;background:#070a16;color:#f3e9d2;font-family:Georgia,serif;z-index:9999">
+    Esta constelación necesita JavaScript para encenderse ✦
+  </p>
+</noscript>
+
 <!-- Cielo de fondo: estrellas pequeñas + resplandor que cambia de frío a cálido -->
-<canvas id="sky"></canvas>
-<div id="mood-glow"></div>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div id="mood-glow" aria-hidden="true"></div>
+
+<!-- Botón de música: fuera de #stage para quedar por encima de las escenas -->
+<button id="btn-mute" class="hidden" type="button" aria-label="Silenciar música" title="Música">
+  <svg id="ico-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 7a7.5 7.5 0 0 1 0 10"/></svg>
+  <svg id="ico-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 5V4L8 9H4z"/><line x1="16" y1="9" x2="21" y2="14"/><line x1="21" y1="9" x2="16" y2="14"/></svg>
+</button>
 
 <!-- Columna central donde vive toda la experiencia -->
-<div id="stage">
+<main id="stage">
 
   <!-- Contador persistente -->
-  <div id="counter" class="hidden">
+  <div id="counter" class="hidden" role="status">
     <span id="counter-num">1383</span>
     <span id="counter-label">días juntos</span>
   </div>
 
-  <!-- Botón de música -->
-  <button id="btn-mute" class="hidden" aria-label="Silenciar música">
-    <svg id="ico-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 7a7.5 7.5 0 0 1 0 10"/></svg>
-    <svg id="ico-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M4 9v6h4l5 5V4L8 9H4z"/><line x1="16" y1="9" x2="21" y2="14"/><line x1="21" y1="9" x2="16" y2="14"/></svg>
-  </button>
-
   <!-- PORTADA -->
-  <div id="intro">
-    <div class="ornament">
-      <svg viewBox="0 0 120 60" fill="none"><line x1="8" y1="30" x2="44" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.45"/><line x1="76" y1="30" x2="112" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.45"/><circle cx="60" cy="30" r="3" fill="currentColor" opacity="0.7"/><circle cx="60" cy="30" r="9" stroke="currentColor" stroke-width="0.5" opacity="0.4"/></svg>
+  <section id="intro" aria-labelledby="intro-title">
+    <div class="ornament" aria-hidden="true">
+      <svg viewBox="0 0 120 60" fill="none" focusable="false"><line x1="8" y1="30" x2="44" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.45"/><line x1="76" y1="30" x2="112" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.45"/><circle cx="60" cy="30" r="3" fill="currentColor" opacity="0.7"/><circle cx="60" cy="30" r="9" stroke="currentColor" stroke-width="0.5" opacity="0.4"/></svg>
     </div>
     <h1 class="title"><em>mi pequeña gigante</em></h1>
     <p class="eyebrow">para Yurany</p>
-    <p class="eyebrow">felicidades por sus xviii</p>
-    <h1 class="title">Nuestra<em>Constelación</em></h1>
+    <p class="eyebrow">felicidades por sus XVIII</p>
+    <h1 class="title" id="intro-title">Nuestra<em>Constelación</em></h1>
     <p class="sub">11 estrellas · 1383 días · una historia que seguimos escribiendo</p>
-    <button id="btn-begin">
+    <button id="btn-begin" type="button">
       <span class="btn-label">✦ Encender el cielo</span>
       <span class="btn-sub">toca para comenzar</span>
     </button>
-  </div>
+  </section>
 
   <!-- CIELO / CONSTELACIÓN -->
-  <div id="constellation" class="hidden">
-    <div id="hint">
+  <section id="constellation" class="hidden" aria-label="Constelación de recuerdos">
+    <div id="hint" aria-live="polite">
       <span id="hint-text">toca la primera estrella</span>
-      <span id="hint-dot">·</span>
+      <span id="hint-dot" aria-hidden="true">·</span>
       <span id="hint-progress">I / VI</span>
     </div>
     <div id="constellation-frame">
-      <svg id="chart-rings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <svg id="chart-rings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <circle cx="50" cy="50" r="47" class="ring"/>
         <circle cx="50" cy="50" r="33" class="ring ring-inner"/>
         <g class="ticks">
@@ -66,54 +80,55 @@
           <line x1="93.5" y1="50" x2="98.5" y2="50"/>
         </g>
       </svg>
-      <svg id="lines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-      <div id="stars-layer"><!-- las estrellas se generan en main.js a partir de MEMORIES --></div>
+      <svg id="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"></svg>
+      <!-- las estrellas se generan en main.js a partir de MEMORIES -->
+      <div id="stars-layer" role="group" aria-label="Estrellas"></div>
     </div>
-  </div>
+  </section>
 
-</div><!-- /stage -->
+</main><!-- /stage -->
 
 <!-- ESCENA DE RECUERDO — pantalla completa, misma sensación que el final -->
-<div id="memory-scene" class="hidden">
-  <img id="memory-photo" alt=""/>
-  <div id="memory-photo-fallback">
-    <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="0.8"/><circle cx="15" cy="18" r="3" stroke="currentColor" stroke-width="0.8"/><path d="M4 27l9-8 6 6 4-5 9 8" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
+<section id="memory-scene" class="hidden" role="dialog" aria-modal="true" aria-labelledby="memory-title" aria-describedby="memory-caption">
+  <img id="memory-photo" alt="" decoding="async"/>
+  <div id="memory-photo-fallback" aria-hidden="true">
+    <svg viewBox="0 0 40 40" fill="none" focusable="false"><rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="0.8"/><circle cx="15" cy="18" r="3" stroke="currentColor" stroke-width="0.8"/><path d="M4 27l9-8 6 6 4-5 9 8" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
   </div>
-  <div id="memory-scrim"></div>
+  <div id="memory-scrim" aria-hidden="true"></div>
   <span class="frame-corner corner-tl" aria-hidden="true"></span>
   <span class="frame-corner corner-tr" aria-hidden="true"></span>
   <span class="frame-corner corner-bl" aria-hidden="true"></span>
   <span class="frame-corner corner-br" aria-hidden="true"></span>
   <div id="memory-inner">
-    <div class="ornament small">
-      <svg viewBox="0 0 90 30" fill="none"><line x1="4" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><line x1="60" y1="15" x2="86" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><path d="M45 9 L47 14 L52 15 L47 16 L45 21 L43 16 L38 15 L43 14 Z" fill="currentColor" opacity="0.9"/></svg>
+    <div class="ornament small" aria-hidden="true">
+      <svg viewBox="0 0 90 30" fill="none" focusable="false"><line x1="4" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><line x1="60" y1="15" x2="86" y2="15" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><path d="M45 9 L47 14 L52 15 L47 16 L45 21 L43 16 L38 15 L43 14 Z" fill="currentColor" opacity="0.9"/></svg>
     </div>
     <p id="memory-roman" class="memory-eyebrow"></p>
     <h2 id="memory-title"></h2>
     <p id="memory-caption"></p>
-    <button id="memory-next">Continuar ✦</button>
+    <button id="memory-next" type="button">Continuar ✦</button>
   </div>
-</div>
+</section>
 
 <!-- ESCENA FINAL -->
-<div id="final" class="hidden">
+<section id="final" class="hidden" aria-labelledby="final-message">
   <!-- AQUÍ VA EL VIDEO DE FONDO — pon tu video (sin audio, ~6 seg) junto  -->
   <!-- a este index.html con el nombre exacto: final.mp4                   -->
   <!-- Si no lo pones, el fondo queda como el cielo dorado normal.         -->
-  <video id="final-video" muted loop playsinline preload="auto">
+  <video id="final-video" muted loop playsinline preload="metadata" disablepictureinpicture aria-hidden="true" tabindex="-1">
     <source src="final.mp4" type="video/mp4">
   </video>
-  <div id="final-scrim"></div>
+  <div id="final-scrim" aria-hidden="true"></div>
   <div id="final-inner">
-    <div class="ornament">
-      <svg viewBox="0 0 120 60" fill="none"><line x1="8" y1="30" x2="44" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><line x1="76" y1="30" x2="112" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><circle cx="60" cy="30" r="3" fill="currentColor" opacity="0.8"/><circle cx="60" cy="30" r="9" stroke="currentColor" stroke-width="0.5" opacity="0.5"/></svg>
+    <div class="ornament" aria-hidden="true">
+      <svg viewBox="0 0 120 60" fill="none" focusable="false"><line x1="8" y1="30" x2="44" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><line x1="76" y1="30" x2="112" y2="30" stroke="currentColor" stroke-width="0.5" opacity="0.55"/><circle cx="60" cy="30" r="3" fill="currentColor" opacity="0.8"/><circle cx="60" cy="30" r="9" stroke="currentColor" stroke-width="0.5" opacity="0.5"/></svg>
     </div>
     <p class="final-eyebrow">para ti, hoy</p>
     <p id="final-message"></p>
     <p id="final-sign">— Yu 18</p>
-    <button id="btn-replay">✦ Volver a empezar</button>
+    <button id="btn-replay" type="button">✦ Volver a empezar</button>
   </div>
-</div>
+</section>
 
 <!-- AQUÍ VA EL AUDIO — reemplaza "audio.mp3" por el archivo de tu canción         -->
 <!-- (Bruno Mars - Risk It All). Pon el archivo de audio junto a este index.html, -->
@@ -122,6 +137,6 @@
   <source src="audio.mp3" type="audio/mpeg"/>
 </audio>
 
-<script src="main.js"></script>
+<script src="main.js" defer></script>
 </body>
-</html>
+                                                </html>
