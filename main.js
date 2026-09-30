@@ -7,7 +7,9 @@
 /* ────────────────────────────────────────────────────────
    ════════  AQUÍ VAN LAS IMÁGENES Y LOS TEXTOS  ════════
    Cada objeto es una estrella/recuerdo, en el orden en que
-   se van a encender. Para poner tu foto, cambia el valor de
+   se van a encender. Las posiciones (x, y en % del marco) forman
+   un corazón SIMÉTRICO: si mueves una estrella de un lado, mueve
+   su espejo (x → 100 - x) para que no se deforme. Para poner tu foto, cambia el valor de
    "img" por el nombre de tu archivo (debe estar junto a
    este index.html). Si falta la foto, se muestra un espacio
    con un ícono — no rompe nada.
@@ -15,77 +17,77 @@
 const MEMORIES = [
   {
     roman: 'I',
-    x: 22, y: 40,
+    x: 10, y: 29,
     title: 'Donde todo empezó',
     caption: 'Me preguntaste por tu prima sin saber que, sin quererlo, te estaba encontrando a ti. 😌❤️',
     img: 'foto1.jpg', // la tienda
   },
   {
     roman: 'II',
-    x: 28, y: 24,
+    x: 30, y: 19,
     title: 'Llegaste tú',
     caption: 'Llegué cansado del trabajo y, de repente, ahí estabas — y el cansancio dejó de importar.',
     img: 'foto2.jpg', // la visita a la casa
   },
   {
     roman: 'III',
-    x: 42, y: 20,
+    x: 39, y: 31,
     title: 'Lo que nos hace reír',
     caption: 'Cada vez que te hago enojar, en el fondo sé que te ríes — como esa vez que te mandé el video manifestando, jajaja.',
     img: 'foto3.jpg', // el video manifestando
   },
   {
     roman: 'IV',
-    x: 50, y: 30,
+    x: 61, y: 31,
     title: 'Lo que aprendimos',
     caption: 'Hubo días en que me enojaba por todo, por gente que no merecía nuestro tiempo — y aun así, elegimos quedarnos.',
     img: 'foto4.jpg', // las peleas
   },
   {
     roman: 'V',
-    x: 58, y: 20,
+    x: 70, y: 19,
     title: 'Estar ahí',
     caption: 'En diciembre, en medio de algo difícil para ti y tu familia, nos tomamos esa foto — porque incluso en lo duro, quise estar a tu lado.',
     img: 'foto5.jpg', // diciembre, la foto juntos
   },
   {
     roman: 'VI',
-    x: 72, y: 24,
+    x: 90, y: 29,
     title: 'Algo que no se marchita',
     caption: 'Tulipanes eternos para tus 17 — porque así quiero que sea esto: algo que dure.',
     img: 'foto6.jpg', // los tulipanes eternos
   },
   {
     roman: 'VII',
-    x: 78, y: 40,
+    x: 85, y: 49,
     title: 'Lo de todos los días',
     caption: 'No hizo falta una fecha especial para que te volvieras parte de mi rutina — un mensaje en la mañana, una llamada antes de dormir, y ya. Así de simple, así de nuestro.',
     img: 'foto7.jpg',
   },
   {
     roman: 'VIII',
-    x: 74, y: 58,
+    x: 67, y: 63,
     title: 'Verte crecer',
     caption: 'Te he visto esforzarte por lo que quieres y salir adelante incluso cuando no era fácil — y cada vez me convenzo más de la persona tan fuerte en la que te has convertido.',
     img: 'foto8.jpg',
   },
   {
     roman: 'IX',
-    x: 64, y: 72,
+    x: 50, y: 81,
     title: 'Lo que todavía falta',
     caption: 'Nos quedan planes por cumplir y lugares por conocer juntos — y aunque no sé todo lo que viene, sí sé con quién quiero verlo pasar.',
     img: 'foto9.jpg',
   },
   {
     roman: 'X',
-    x: 50, y: 84,
+    x: 33, y: 63,
     title: 'Quién eres para mí',
     caption: 'Mi pequeña gigante: pequeña en estatura, pero con una fuerza que me sostiene incluso en mis peores días. Eso es lo que veo cuando te miro.',
     img: 'foto10.jpg',
   },
   {
     roman: 'XI',
-    x: 36, y: 72,
+    x: 15, y: 49,
     title: 'Hoy, tus XVIII',
     caption: 'Once estrellas, un cielo entero, y todavía sigo eligiéndote a ti. Feliz cumpleaños, mi amor — esto apenas empieza.',
     img: 'foto11.jpg',
@@ -153,6 +155,7 @@ const finalVideo    = $('final-video');
 const finalMessage  = $('final-message');
 const btnReplay     = $('btn-replay');
 const audio         = $('audio');
+const introSky      = $('intro-sky');
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -587,6 +590,131 @@ function restart() {
 }
 
 /* ────────────────────────────────────────────────────────
+   CONSTELACIÓN DE LA PORTADA: CAPRICORNIO
+   Dibuja dentro de #intro-sky la constelación del signo de
+   su cumpleaños. Las posiciones son aproximadas (ascensión
+   recta y declinación proyectadas sobre el plano, con el este
+   a la izquierda como en un mapa celeste; x → derecha, y → abajo).
+   "outline" es el orden en que se traza el contorno.
+──────────────────────────────────────────────────────── */
+const CAPRICORNUS = {
+  stars: {
+    alpha:   { x: 12.76, y: 12.5, arm: 1.8 },  // Algedi (cuerno)
+    beta:    { x: 12.0,  y: 14.8, arm: 1.9 },  // Dabih
+    psi:     { x: 6.1,   y: 25.3, r: 0.5 },
+    omega:   { x: 4.8,   y: 26.9, r: 0.5 },
+    theta:   { x: 1.4,   y: 17.2, r: 0.55 },
+    iota:    { x: -2.4,  y: 16.8, r: 0.5 },
+    zeta:    { x: -3.55, y: 22.4, arm: 1.4 },
+    gamma:   { x: -6.6,  y: 16.7, arm: 1.5 },  // Nashira
+    epsilon: { x: -6.0,  y: 19.5, r: 0.5 },
+    delta:   { x: -8.3,  y: 16.1, arm: 2.2, gold: true }, // Deneb Algedi (cola)
+  },
+  outline: ['alpha', 'theta', 'iota', 'gamma', 'delta', 'epsilon', 'zeta', 'omega', 'psi', 'beta', 'alpha'],
+};
+
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function buildIntroSky() {
+  if (!introSky) return;
+  introSky.textContent = '';
+  const rand = mulberry32(1383);
+  const f = n => n.toFixed(2);
+  const mk = (tag, attrs, parent) => {
+    const el = document.createElementNS(SVG_NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    (parent || introSky).appendChild(el);
+    return el;
+  };
+  const glyph = (x, y, A) => {
+    const w = A * 0.27;
+    return `M${f(x)} ${f(y - A)} L${f(x + w)} ${f(y - w)} L${f(x + A)} ${f(y)} L${f(x + w)} ${f(y + w)} ` +
+           `L${f(x)} ${f(y + A)} L${f(x - w)} ${f(y + w)} L${f(x - A)} ${f(y)} L${f(x - w)} ${f(y - w)} Z`;
+  };
+
+  // Escala y posición de la figura dentro del lienzo 100 × 180
+  const K = 3.6, CX = 50, CY = 34, OX = 2.25, OY = 19.7;
+  const pts = {};
+  for (const id in CAPRICORNUS.stars) {
+    const s = CAPRICORNUS.stars[id];
+    pts[id] = { ...s, x: CX + (s.x - OX) * K, y: CY + (s.y - OY) * K };
+  }
+  const named = Object.values(pts);
+
+  // 1) Resplandor azul de nebulosa detrás de la figura
+  const defs = mk('defs', {});
+  const grad = mk('radialGradient', { id: 'isky-neb' }, defs);
+  mk('stop', { offset: '0',   'stop-color': '#5a7be8', 'stop-opacity': '0.32' }, grad);
+  mk('stop', { offset: '0.6', 'stop-color': '#3a4d8f', 'stop-opacity': '0.15' }, grad);
+  mk('stop', { offset: '1',   'stop-color': '#3a4d8f', 'stop-opacity': '0' }, grad);
+  mk('ellipse', { cx: 50, cy: 36, rx: 58, ry: 36, fill: 'url(#isky-neb)' });
+
+  // 2) Polvo de estrellas (menos denso detrás del texto)
+  const dust = mk('g', {});
+  for (let i = 0; i < 160; i++) {
+    const x = rand() * 100, y = rand() * 180;
+    const inText = x > 14 && x < 86 && y > 64 && y < 150;
+    if (inText && rand() < 0.8) continue;
+    mk('circle', { cx: f(x), cy: f(y), r: f(0.1 + rand() * 0.14), class: 'isky-dust' }, dust);
+  }
+
+  // 3) Estrellas tenues del campo, alrededor de la constelación
+  const field = [];
+  for (let n = 0; n < 200 && field.length < 18; n++) {
+    const x = 4 + rand() * 92, y = 3 + rand() * 63;
+    if (named.some(s => Math.hypot(s.x - x, s.y - y) < 6)) continue;
+    if (field.some(s => Math.hypot(s.x - x, s.y - y) < 7)) continue;
+    field.push({ x, y });
+  }
+  const fieldG = mk('g', {});
+  field.forEach(s => mk('circle', {
+    cx: f(s.x), cy: f(s.y), r: f(0.22 + rand() * 0.2), class: 'isky-star field',
+  }, fieldG));
+
+  // 4) Contorno: el trazo recorre la figura, del cuerno a la cola y de vuelta
+  const lines = mk('g', {});
+  const ids = CAPRICORNUS.outline;
+  for (let i = 0; i < ids.length - 1; i++) {
+    const a = pts[ids[i]], b = pts[ids[i + 1]];
+    const d = `M${f(a.x)} ${f(a.y)} L${f(b.x)} ${f(b.y)}`;
+    ['isky-line glow', 'isky-line'].forEach(cls => {
+      const p = mk('path', { d, pathLength: 1, class: cls }, lines);
+      p.style.animationDelay = (1.0 + i * 0.45).toFixed(2) + 's';
+    });
+  }
+
+  // 5) Las estrellas de Capricornio, encima de las líneas
+  const starG = mk('g', {});
+  starG.style.animation = 'isky-in 1.2s ease 0.4s backwards';
+  named.forEach(s => {
+    const cls = 'isky-star' + (s.gold ? ' gold' : '');
+    let el;
+    if (s.arm) {
+      mk('circle', { cx: f(s.x), cy: f(s.y), r: f(s.arm * 1.9), class: 'isky-halo' }, starG);
+      el = mk('path', { d: glyph(s.x, s.y, s.arm), class: cls + ' isky-tw' }, starG);
+      el.style.animationDuration = (2.8 + rand() * 2.6).toFixed(2) + 's';
+      el.style.animationDelay = (-rand() * 4).toFixed(2) + 's';
+    } else {
+      mk('circle', { cx: f(s.x), cy: f(s.y), r: s.r, class: cls }, starG);
+    }
+  });
+
+  // 6) Nombre de la constelación, dentro del triángulo de la figura
+  const label = mk('text', {
+    x: 52, y: 36, 'text-anchor': 'middle',
+    transform: 'rotate(-12 52 36)', class: 'isky-label',
+  });
+  label.textContent = 'CAPRICORNIO';
+}
+
+/* ────────────────────────────────────────────────────────
    EVENTOS GLOBALES
 ──────────────────────────────────────────────────────── */
 // Con la pestaña oculta: se pausa el cielo y el temporizador del recuerdo.
@@ -621,6 +749,7 @@ function init() {
   setupCanvas();
   seedBgStars();
   startSky();
+  buildIntroSky();
   setMood(0);
 
   updateCounterIfDynamic();
