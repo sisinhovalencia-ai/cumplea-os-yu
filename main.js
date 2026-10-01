@@ -654,6 +654,9 @@ function buildIntroSky() {
   mk('stop', { offset: '0',   'stop-color': '#5a7be8', 'stop-opacity': '0.32' }, grad);
   mk('stop', { offset: '0.6', 'stop-color': '#3a4d8f', 'stop-opacity': '0.15' }, grad);
   mk('stop', { offset: '1',   'stop-color': '#3a4d8f', 'stop-opacity': '0' }, grad);
+  const hgrad = mk('radialGradient', { id: 'isky-halo-g' }, defs);
+  mk('stop', { offset: '0', 'stop-color': '#e8b965', 'stop-opacity': '0.5' }, hgrad);
+  mk('stop', { offset: '1', 'stop-color': '#e8b965', 'stop-opacity': '0' }, hgrad);
   mk('ellipse', { cx: 50, cy: 36, rx: 58, ry: 36, fill: 'url(#isky-neb)' });
 
   // 2) Polvo de estrellas (menos denso detrás del texto)
@@ -697,7 +700,7 @@ function buildIntroSky() {
     const cls = 'isky-star' + (s.gold ? ' gold' : '');
     let el;
     if (s.arm) {
-      mk('circle', { cx: f(s.x), cy: f(s.y), r: f(s.arm * 1.9), class: 'isky-halo' }, starG);
+      mk('circle', { cx: f(s.x), cy: f(s.y), r: f(s.arm * 2.6), class: 'isky-halo' }, starG);
       el = mk('path', { d: glyph(s.x, s.y, s.arm), class: cls + ' isky-tw' }, starG);
       el.style.animationDuration = (2.8 + rand() * 2.6).toFixed(2) + 's';
       el.style.animationDelay = (-rand() * 4).toFixed(2) + 's';
