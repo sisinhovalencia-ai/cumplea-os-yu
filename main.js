@@ -95,7 +95,7 @@ const MEMORIES = [
 ];
 
 // El "--" separa párrafos en la escena final.
-const FINAL_MESSAGE = 'Feliz cumpleaños, mi amor. Gracias por ser siempre tan linda conmigo y por todo lo que compartimos. -- De verdad deseo que la vida nos permita seguir construyendo esto mientras Dios así lo quiera. -- Quiero que nunca dudes de algo: te amo, y mi cariño por ti es real. Pase lo que pase, siempre voy a estar para ti. -- Se acabó todo Yu ahora si.;
+const FINAL_MESSAGE = 'Feliz cumpleaños, mi amor. Gracias por ser siempre tan linda conmigo y por todo lo que compartimos. -- De verdad deseo que la vida nos permita seguir construyendo esto mientras Dios así lo quiera. -- Quiero que nunca dudes de algo: te amo, y mi cariño por ti es real. Pase lo que pase, siempre voy a estar para ti. -- Se acabó todo Yu ahora si. Me hice mucho daño tratando de conseguir que me amaras de verdad';
 
 /* ────────────────────────────────────────────────────────
    AJUSTES
