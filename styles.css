@@ -733,6 +733,36 @@ button:focus-visible {
   #counter { top: 8px; }
 }
 
+/* ── CELULAR EN HORIZONTAL: PORTADA A DOS COLUMNAS ────────
+   En horizontal no hay altura para apilar la constelación y el
+   texto (se pisaban). Aquí la columna central se ensancha:
+   Capricornio queda a la izquierda y el texto a la derecha. Si
+   aun así el texto no cupiera, la portada se desplaza en vez
+   de cortarse por arriba y por abajo.
+──────────────────────────────────────────────────────── */
+@media (orientation: landscape) and (max-height: 560px) {
+  #stage { width: min(920px, 100vw); }
+  #intro {
+    padding: 10px max(20px, env(safe-area-inset-right)) 10px 47%;
+    justify-content: center;
+    justify-content: safe center;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+  #intro::-webkit-scrollbar { display: none; }
+  #intro-sky {
+    inset: 0 auto auto 0;
+    width: 46%; height: 100%;
+    opacity: 1;
+  }
+  .ornament { display: none; }
+  .eyebrow { font-size: 10.5px; }
+  .title-script { font-size: clamp(32px, 6vw, 42px); }
+  .title-caps { font-size: clamp(20px, 3.6vw, 26px); }
+  .sub { font-size: clamp(14px, 2.2vw, 16px); max-width: 100%; }
+}
+
 /* ── TABLETS Y PC (≥600px de ancho) ───────────────────────
    #stage sigue con tope en 480px; el marco gana un poco
    más de aire.
@@ -769,7 +799,7 @@ button:focus-visible {
 @keyframes isky-twinkle { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
 
 .isky-dust { fill: var(--star); opacity: 0.55; }
-.isky-halo { fill: rgba(232,185,101,0.14); }
+.isky-halo { fill: url(#isky-halo-g); } /* degradado definido en main.js: brillo suave, no un disco plano */
 .isky-star { fill: var(--star); }
 .isky-star.gold { fill: var(--gold); }
 .isky-star.field { fill-opacity: 0.7; }
